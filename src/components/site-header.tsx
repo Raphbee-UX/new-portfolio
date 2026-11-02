@@ -19,7 +19,7 @@ export function SiteHeader() {
     <div className="header-wrap">
       <header className="site-nav" aria-label="Main navigation">
         <Link href="/" className="brand-mark" aria-label="Raphbee home">
-          <Image src="https://raw.githubusercontent.com/Raphbee-UX/new-portfolio/main/Raphbee_logo_black_version.png" alt="Raphbee" width={132} height={42} priority />
+          <Image src="/Raphbee_logo_black_version.png" alt="Raphbee" width={132} height={42} priority />
         </Link>
         <nav className="desktop-links" aria-label="Main">
           {links.map(([label, href]) => <Link key={label} href={href}>{label}</Link>)}
