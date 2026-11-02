@@ -24,7 +24,9 @@ export function Odometer({ value }: { value: string }) {
   const ref = useRef<HTMLSpanElement>(null);
   const inView = useInView(ref, { once: true, amount: 0.45 });
   const reducedMotion = useReducedMotion();
-  const active = reducedMotion ? true : inView;
+  const active = inView && !reducedMotion;
+
+  if (reducedMotion) return <span className="odometer-value">{value}</span>;
 
   return (
     <span ref={ref} className="odometer-value" aria-label={value}>
