@@ -22,7 +22,7 @@ export function Hero() {
         <div className="portrait-column">
           <div className="portrait-frame">
             <Image
-              src="https://raw.githubusercontent.com/Raphbee-UX/new-portfolio/main/profile_main.jfif"
+              src="/profile_main.jfif"
               alt="Raphael, known professionally as Raphbee"
               fill
               priority
