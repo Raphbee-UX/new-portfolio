@@ -34,7 +34,7 @@ export function Hero() {
         <motion.div className="portrait-column" {...enter(0.28)}>
           <div className="portrait-frame">
             <Image
-              src="/profile_main.jfif"
+              src="/profile_main.png"
               alt="Raphael, known professionally as Raphbee"
               fill
               priority
