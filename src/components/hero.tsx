@@ -6,10 +6,11 @@ export function Hero() {
     <section className="hero-section" aria-labelledby="hero-title">
       <div className="hero-grid">
         <div className="hero-intro">
-          <p className="eyebrow">Independent digital specialist <span>·</span> Nigeria / Worldwide</p>
-          <h1 id="hero-title">I&apos;m <span>Raphbee.</span><br />I build digital systems that help businesses grow.</h1>
+          <p className="hero-greeting">Hello, I&apos;m</p>
+          <h1 id="hero-title">Raphbee<span>.</span></h1>
+          <p className="hero-descriptor">E-commerce &amp; Automation Specialist</p>
           <p className="hero-copy">
-            I bring e-commerce, web development, automation and practical AI together to help businesses work smarter, reduce operational friction and create better online experiences.
+            I build digital systems that help businesses operate smarter, reduce friction and create better online experiences.
           </p>
           <div className="hero-links">
             <a className="text-link" href="#work">Explore selected work <ArrowUpRight size={16} /></a>
@@ -38,7 +39,7 @@ export function Hero() {
         <aside className="hero-notes" aria-label="Introduction and focus">
           <article className="note-block">
             <p className="note-label">01 / MY APPROACH</p>
-            <p>Thoughtful digital foundations. Practical tools. Connected systems that make everyday business easier.</p>
+            <p>Thoughtful digital foundations, practical tools and connected systems that make everyday business easier.</p>
           </article>
           <article className="note-block">
             <p className="note-label">02 / WHAT I DO</p>
@@ -46,7 +47,7 @@ export function Hero() {
           </article>
           <article className="note-block">
             <p className="note-label">03 / CURRENTLY OPEN TO</p>
-            <p>Working with founders, businesses and teams ready to improve their digital operations and customer experience.</p>
+            <p>Projects with founders and businesses improving their digital operations, storefronts and customer experience.</p>
           </article>
         </aside>
       </div>
