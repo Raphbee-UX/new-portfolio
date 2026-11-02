@@ -26,13 +26,13 @@ export function SiteHeader() {
         </nav>
         <div className="nav-actions">
           <span className="availability"><i aria-hidden="true" />Open to projects</span>
-          <Link href="#contact" className="talk-button">Let&apos;s talk <ArrowUpRight size={15} /></Link>
+          <Link href="#contact" className="talk-button">Let&apos;s talk <ArrowUpRight size={14} /></Link>
         </div>
         <details className="mobile-menu">
-          <summary aria-label="Open navigation"><Menu size={20} /></summary>
+          <summary aria-label="Open navigation"><Menu size={19} /></summary>
           <nav aria-label="Mobile">
             {links.map(([label, href]) => <Link key={label} href={href}>{label}</Link>)}
-            <Link href="#contact">Let&apos;s talk <ArrowUpRight size={15} /></Link>
+            <Link href="#contact">Let&apos;s talk <ArrowUpRight size={14} /></Link>
           </nav>
         </details>
       </header>
