@@ -3,7 +3,6 @@
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowUpRight, Menu } from "lucide-react";
-import { siteConfig } from "@/data/site";
 
 const links = [
   ["Work", "#work"],
