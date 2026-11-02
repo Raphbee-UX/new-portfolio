@@ -1,11 +1,8 @@
 export const siteConfig = {
   name: "Raphbee",
-  descriptor: "E-commerce & Automation",
-  headline: "Building digital systems that help businesses grow.",
-  intro:
-    "I'm Raphael, an e-commerce and automation-focused digital specialist helping businesses build better online experiences, streamline operations, and turn opportunities into customers.",
+  descriptor: "E-commerce · Web · Automation · AI",
   location: "Nigeria",
-  availability: "Available for selected projects",
+  availability: "Open to projects",
   contact: {
     email: "",
     whatsapp: "",
@@ -14,9 +11,11 @@ export const siteConfig = {
   },
 };
 
+// These are user-supplied starting figures, not independently verified outcomes.
+// Keep them editable and do not present the descriptions as confirmed client results.
 export const kpis = [
-  { value: "200+", label: "Products approved", source: "Google Merchant Center work" },
-  { value: "—", label: "Client projects", source: "Pending your approved count" },
-  { value: "—", label: "Years building", source: "Pending your preferred figure" },
-  { value: "—", label: "Countries served", source: "Pending your approved count" },
+  { index: "01", value: "200+", label: "Products and process touchpoints", context: "E-commerce operations and manual workflow improvements — confirm scope." },
+  { index: "02", value: "1M+", label: "Records and data points", context: "Data checks and automated handling — confirm the measurement and evidence." },
+  { index: "03", value: "4,500+", label: "Potential hours reclaimed", context: "Illustrative operational-efficiency figure — confirm calculation before use." },
+  { index: "04", value: "100%", label: "Built around reliable systems", context: "A design principle, not a measured uptime or reliability guarantee." },
 ];
