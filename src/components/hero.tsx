@@ -1,6 +1,5 @@
 import Image from "next/image";
 import { ArrowDownRight, ArrowUpRight, MapPin } from "lucide-react";
-import { siteConfig } from "@/data/site";
 
 export function Hero() {
   return (
