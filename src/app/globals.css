@@ -199,3 +199,55 @@ button { font: inherit; }
  .whatsapp-preview{width:min(310px,calc(100vw - 34px));padding:14px 15px}
 }
 @media(prefers-reduced-motion:reduce){.whatsapp-glow{animation:none}}
+
+
+/* Requested contact and mobile wordmark refinements */
+.whatsapp-fab {
+  width: 72px;
+  height: 72px;
+  background: transparent;
+  box-shadow: none;
+}
+.whatsapp-fab img { width: 62px; height: 62px; }
+.whatsapp-preview {
+  background-color: #efeae2;
+  background-image:
+    linear-gradient(rgba(239,234,226,.90), rgba(239,234,226,.90)),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180' viewBox='0 0 180 180' fill='none' stroke='%237b8b7d' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M18 28c8-9 19-7 22 2 3 8-5 15-13 13-8-2-10-10-5-15zm110 5c8 0 13 6 11 13-2 7-11 9-16 4-6-6-3-17 5-17zM38 112c8-8 19-4 19 5 0 8-9 13-16 8-6-4-7-9-3-13zm91 34 8-13 8 13-8 13-8-13zM86 22l5 8 9 2-7 6 1 9-8-5-8 5 2-9-7-6 9-2 4-8zM14 153l12-4 9 7-4 12-12 1-7-8zM151 91l9-6 9 7-3 11-11 1-4-7z'/%3E%3Cpath d='M74 75c7-7 18-7 25 0m-22 7c4-4 12-4 16 0m-9 9v8m44-53 5 4-5 4-5-4 5-4zM27 72l5 5-5 5-5-5 5-5zM111 116l6-7 7 7-7 7-6-7z'/%3E%3C/svg%3E");
+  background-size: auto, 180px 180px;
+}
+.mobile-upwork-label {
+  color: #77746c;
+  font-size: 8px;
+  font-weight: 650;
+  line-height: 1;
+  letter-spacing: .025em;
+}
+@media (max-width: 760px) {
+  .mobile-upwork-link {
+    width: auto;
+    height: 44px;
+    flex: 0 0 auto;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 3px;
+    margin-left: auto;
+    margin-right: 10px;
+  }
+  .mobile-upwork-link img { width: 29px; height: 29px; }
+  .portfolio-wordmark {
+    top: clamp(420px, 112vw, 510px);
+    left: 50%;
+    width: max-content;
+    max-width: none;
+    font-size: clamp(5.5rem, 24vw, 8.4rem);
+    font-weight: 700;
+    letter-spacing: -.105em;
+    line-height: .72;
+    color: #E3E1D9;
+    z-index: 0;
+  }
+  .whatsapp-fab { width: 70px; height: 70px; }
+  .whatsapp-fab img { width: 60px; height: 60px; }
+}

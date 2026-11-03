@@ -3,8 +3,8 @@ import Image from "next/image";
 import { useEffect, useState } from "react";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { X } from "lucide-react";
-const whatsappUrl = "https://wa.me/447862617335?text=Hi%20Raphael%2C%20I%20came%20across%20your%20portfolio%20and%20would%20like%20to%20discuss%20a%20potential%20project.%20Are%20you%20available%20to%20chat%3F";
-const message = "Hi Raphael, I came across your portfolio and would like to discuss a potential project. Are you available to chat?";
+const whatsappUrl = "https://wa.me/447862617335?text=Hi%20Raphael!%20%F0%9F%91%8B%20I%20came%20across%20your%20portfolio%20and%20I%27m%20interested%20in%20working%20with%20you.%20%F0%9F%9A%80%20Could%20we%20have%20a%20quick%20chat%20about%20my%20project%3F";
+const message = "Hi Raphael! 👋 I came across your portfolio and I\u0027m interested in working with you. 🚀 Could we have a quick chat about my project?";
 export function WhatsAppContact() {
  const [hasScrolled,setHasScrolled]=useState(false);
  const [dismissed,setDismissed]=useState(false);

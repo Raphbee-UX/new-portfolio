@@ -21,7 +21,7 @@ export function SiteHeader() {
     <Link href="#contact" className="talk-button">Let&apos;s talk <ArrowUpRight size={14} /></Link>
    </div>
    <a className="mobile-upwork-link" href="https://www.upwork.com/freelancers/~010976d055baaeefef" target="_blank" rel="noreferrer" aria-label="Visit my Upwork profile">
-    <Image src="/upwork-logo.png" alt="Upwork" width={34} height={34} />
+    <span className="mobile-upwork-label">Hire on:</span><Image src="/upwork-logo.png" alt="Upwork" width={34} height={34} />
    </a>
    <details className="mobile-menu">
     <summary aria-label="Open navigation"><Menu size={19} /></summary>
