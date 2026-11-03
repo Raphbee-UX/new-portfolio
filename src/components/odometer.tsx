@@ -22,13 +22,17 @@ function DigitRoll({ digit, active, delay }: { digit: string; active: boolean; d
 }
 
 export function Odometer({ value, active, reducedMotion }: { value: string; active: boolean; reducedMotion: boolean }) {
-  if (reducedMotion) return <span className="odometer-value">{value}</span>;
+  const numericPart = value.match(/^[\\d,]+/)?.[0] ?? "";
+  const suffix = value.slice(numericPart.length);
+
+  if (reducedMotion) return <span className="odometer-value">{numericPart}{suffix}</span>;
 
   return (
     <span className="odometer-value" role="img" aria-label={value}>
-      {Array.from(value).map((char, index) => (
-        <DigitRoll key={`${index}-${char}`} digit={char} active={active} delay={index * 0.075} />
+      {Array.from(numericPart).map((char, index) => (
+        <DigitRoll key={`digit-${index}-${char}`} digit={char} active={active} delay={index * 0.075} />
       ))}
+      {suffix && <span className="odometer-static">{suffix}</span>}
     </span>
   );
 }
