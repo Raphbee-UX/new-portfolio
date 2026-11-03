@@ -237,18 +237,18 @@ button { font: inherit; }
   }
   .mobile-upwork-link img { width: 29px; height: 29px; }
   .portfolio-wordmark {
-    top: 175px;
+    top: 215px;
     left: 50%;
     width: max-content;
     max-width: none;
-    font-size: clamp(5rem, 23.5vw, 12rem);
+    font-size: clamp(5rem, 21vw, 12rem);
     font-weight: 700;
     letter-spacing: -.105em;
     line-height: .72;
     color: #E3E1D9;
-    z-index: 1;
-    transform: translateX(-50%) scaleY(1.2); /* Artificially stretches the font vertically */
-    transform-origin: top center;
+    z-index: 0;
+    transform: translateX(-50%) scaleY(1.2); 
+    transform-origin: center center;
   }
   .whatsapp-fab { width: 70px; height: 70px; }
   .whatsapp-fab img { width: 60px; height: 60px; }
