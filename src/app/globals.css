@@ -169,3 +169,33 @@ button { font: inherit; }
   html { scroll-behavior: auto; }
   *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
 }
+
+/* Header contact links and mobile Upwork shortcut */
+.availability-stack{display:flex;flex-direction:column;align-items:flex-start;gap:5px}
+.header-contact-links{display:flex;align-items:center;gap:13px;padding-left:14px}
+.header-contact-links a{display:inline-flex;align-items:center;gap:3px;padding-bottom:2px;border-bottom:1px dotted rgba(23,23,20,.42);color:#77746c;font-size:10px;font-weight:650;transition:color .2s ease}
+.header-contact-links a:hover{color:var(--ink)}
+.mobile-upwork-link{display:none;align-items:center;justify-content:center;width:38px;height:38px;flex:0 0 38px}
+.mobile-upwork-link img{display:block;width:32px;height:32px;object-fit:contain}
+/* Floating WhatsApp contact */
+.whatsapp-contact{position:fixed;z-index:60;right:26px;bottom:25px;display:flex;flex-direction:column;align-items:flex-end;gap:14px;pointer-events:none}
+.whatsapp-fab{position:relative;z-index:1;display:grid;place-items:center;width:62px;height:62px;border-radius:50%;background:#fff;box-shadow:0 5px 22px rgba(20,35,24,.16);pointer-events:auto;isolation:isolate}
+.whatsapp-fab img{position:relative;z-index:2;width:39px;height:39px;object-fit:contain}
+.whatsapp-glow{position:absolute;z-index:-1;inset:-8px;border-radius:50%;background:rgba(37,211,102,.24);filter:blur(12px);animation:whatsapp-glow 3.2s ease-in-out infinite}
+.whatsapp-preview{width:min(330px,calc(100vw - 36px));padding:16px 17px 15px;border:1px solid rgba(23,23,20,.1);border-radius:17px;background:rgba(250,248,242,.97);box-shadow:0 12px 38px rgba(23,23,20,.13);pointer-events:auto;backdrop-filter:blur(14px)}
+.whatsapp-preview-top{display:flex;align-items:center;justify-content:space-between;gap:12px;color:#77746c;font-size:8px;font-weight:750;letter-spacing:.13em}
+.whatsapp-preview-top button{display:grid;place-items:center;width:25px;height:25px;padding:0;border:0;border-radius:50%;background:#eeece5;color:#55524b;cursor:pointer}
+.whatsapp-preview p{margin:9px 0 12px;color:#34332e;font-size:12px;line-height:1.6}
+.whatsapp-preview>a{display:inline-flex;align-items:center;gap:6px;color:#168447;font-size:11px;font-weight:750}
+@keyframes whatsapp-glow{0%,100%{opacity:.55;transform:scale(.96)}50%{opacity:.9;transform:scale(1.06)}}
+@media(max-width:760px){
+ .nav-actions{display:none}
+ .mobile-upwork-link{display:inline-flex;margin-left:auto;margin-right:10px}
+ .portfolio-wordmark{z-index:0;top:104px;width:max-content;max-width:none;font-size:25vw;letter-spacing:-.12em;line-height:.68}
+ .hero-section{z-index:1}
+ .whatsapp-contact{right:17px;bottom:max(17px,env(safe-area-inset-bottom));gap:11px}
+ .whatsapp-fab{width:56px;height:56px}
+ .whatsapp-fab img{width:35px;height:35px}
+ .whatsapp-preview{width:min(310px,calc(100vw - 34px));padding:14px 15px}
+}
+@media(prefers-reduced-motion:reduce){.whatsapp-glow{animation:none}}
