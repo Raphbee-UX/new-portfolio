@@ -21,7 +21,6 @@ export function Hero() {
           <div className="portrait-frame">
             <motion.div
               className="portrait-float"
-              aria-hidden="true"
               animate={reducedMotion ? undefined : { y: [0, -7, 0, 7, 0], scale: [1, 1.012, 1, 1.008, 1] }}
               transition={reducedMotion ? undefined : { duration: 8, ease: "easeInOut", repeat: Infinity, repeatType: "loop" }}
             >
