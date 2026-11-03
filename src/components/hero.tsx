@@ -1,7 +1,6 @@
 "use client";
 
 import Image from "next/image";
-import Link from "next/link";
 import { ArrowDownRight, ArrowUpRight, MapPin } from "lucide-react";
 import { motion, useReducedMotion } from "framer-motion";
 
@@ -18,6 +17,23 @@ export function Hero() {
   return (
     <section className="hero-section" aria-labelledby="hero-title">
       <div className="hero-grid">
+        <motion.div className="portrait-column" {...enter(0.28)}>
+          <div className="portrait-frame">
+            <Image
+              src="/complementary_profile_headshot-removebg-preview.png"
+              alt="Raphael, known professionally as Raphbee"
+              fill
+              priority
+              sizes="(max-width: 760px) 82vw, (max-width: 1100px) 40vw, 32vw"
+              className="portrait-image"
+            />
+          </div>
+          <div className="portrait-caption">
+            <span>RAPHBEE</span>
+            <span>BUILD WITH INTENTION</span>
+          </div>
+        </motion.div>
+
         <div className="hero-intro">
           <motion.p className="hero-greeting" {...enter(0.16)}>Hello, I&apos;m</motion.p>
           <motion.h1 id="hero-title" {...enter(0.22)}>Raphbee<span>.</span></motion.h1>
@@ -31,23 +47,6 @@ export function Hero() {
           </motion.div>
           <motion.p className="location-line" {...enter(0.52)}><MapPin size={14} /> Based in Nigeria · Working worldwide</motion.p>
         </div>
-
-        <motion.div className="portrait-column" {...enter(0.28)}>
-          <div className="portrait-frame">
-            <Image
-              src="/profile_main.png"
-              alt="Raphael, known professionally as Raphbee"
-              fill
-              priority
-              sizes="(max-width: 760px) 82vw, (max-width: 1100px) 40vw, 32vw"
-              className="portrait-image"
-            />
-          </div>
-          <div className="portrait-caption">
-            <span>RAPHBEE</span>
-            <span>BUILD WITH INTENTION</span>
-          </div>
-        </motion.div>
 
         <aside className="hero-notes" aria-label="Introduction and focus">
           <motion.article className="note-block" {...enter(0.4)}>
