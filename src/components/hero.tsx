@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import profileMain from "../../profile_main.png";
 import { ArrowDownRight, ArrowUpRight, MapPin } from "lucide-react";
 import { motion, useReducedMotion } from "framer-motion";
 
@@ -34,7 +35,7 @@ export function Hero() {
         <motion.div className="portrait-column" {...enter(0.28)}>
           <div className="portrait-frame">
             <Image
-              src="/profile_main.png"
+              src={profileMain}
               alt="Raphael, known professionally as Raphbee"
               fill
               priority
