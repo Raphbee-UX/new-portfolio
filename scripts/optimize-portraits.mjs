@@ -1,3 +1,4 @@
+import fs from "node:fs/promises";
 import path from "node:path";
 import sharp from "sharp";
 
@@ -5,7 +6,7 @@ const root = process.cwd();
 const outputDir = path.join(root, "public", "images", "portraits");
 const portraits = ["profile_main.png"];
 
-await import("node:fs/promises").then(({ mkdir }) => mkdir(outputDir, { recursive: true }));
+await fs.mkdir(outputDir, { recursive: true });
 
 for (const filename of portraits) {
   const input = path.join(root, filename);
