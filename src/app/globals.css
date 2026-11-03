@@ -241,7 +241,7 @@ button { font: inherit; }
     left: 50%;
     width: max-content;
     max-width: none;
-    font-size: clamp(6.25rem, 30vw, 8rem);
+    font-size: clamp(4rem, 19vw, 8rem);
     font-weight: 700;
     letter-spacing: -.105em;
     line-height: .72;
