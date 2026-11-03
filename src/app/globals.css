@@ -237,11 +237,11 @@ button { font: inherit; }
   }
   .mobile-upwork-link img { width: 29px; height: 29px; }
   .portfolio-wordmark {
-    top: clamp(420px, 112vw, 510px);
+    top: 145px;
     left: 50%;
     width: max-content;
     max-width: none;
-    font-size: clamp(5.5rem, 24vw, 8.4rem);
+    font-size: clamp(6.25rem, 30vw, 8rem);
     font-weight: 700;
     letter-spacing: -.105em;
     line-height: .72;
