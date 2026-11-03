@@ -19,14 +19,21 @@ export function Hero() {
       <div className="hero-grid">
         <motion.div className="portrait-column" {...enter(0.28)}>
           <div className="portrait-frame">
-            <Image
-              src="/complementary_profile_headshot-removebg-preview.png"
-              alt="Raphael, known professionally as Raphbee"
-              fill
-              priority
-              sizes="(max-width: 760px) 82vw, (max-width: 1100px) 40vw, 32vw"
-              className="portrait-image"
-            />
+            <motion.div
+              className="portrait-float"
+              aria-hidden="true"
+              animate={reducedMotion ? undefined : { y: [0, -7, 0, 7, 0], scale: [1, 1.012, 1, 1.008, 1] }}
+              transition={reducedMotion ? undefined : { duration: 8, ease: "easeInOut", repeat: Infinity, repeatType: "loop" }}
+            >
+              <Image
+                src="/profile_main.png"
+                alt="Raphael, known professionally as Raphbee"
+                fill
+                priority
+                sizes="(max-width: 760px) 82vw, (max-width: 1100px) 40vw, 32vw"
+                className="portrait-image"
+              />
+            </motion.div>
           </div>
           <div className="portrait-caption">
             <span>RAPHBEE</span>
