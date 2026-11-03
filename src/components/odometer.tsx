@@ -22,7 +22,7 @@ function DigitRoll({ digit, active, delay }: { digit: string; active: boolean; d
 }
 
 export function Odometer({ value, active, reducedMotion }: { value: string; active: boolean; reducedMotion: boolean }) {
-  const numericPart = value.match(/^[\\d,]+/)?.[0] ?? "";
+  const numericPart = value.match(/^[\d,]+/)?.[0] ?? "";
   const suffix = value.slice(numericPart.length);
 
   if (reducedMotion) return <span className="odometer-value">{numericPart}{suffix}</span>;
