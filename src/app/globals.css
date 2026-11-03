@@ -237,7 +237,7 @@ button { font: inherit; }
   }
   .mobile-upwork-link img { width: 29px; height: 29px; }
   .portfolio-wordmark {
-    top: 145px;
+    top: 175px;
     left: 50%;
     width: max-content;
     max-width: none;
@@ -246,7 +246,7 @@ button { font: inherit; }
     letter-spacing: -.105em;
     line-height: .72;
     color: #E3E1D9;
-    z-index: 0;
+    z-index: 1;
   }
   .whatsapp-fab { width: 70px; height: 70px; }
   .whatsapp-fab img { width: 60px; height: 60px; }
