@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
+import logoWhite from "../../logo_white.png";
 import { ArrowUpRight, Menu } from "lucide-react";
 import { motion, useReducedMotion } from "framer-motion";
 
@@ -28,7 +29,7 @@ export function SiteHeader() {
         transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
       >
         <Link href="/" className="brand-mark" aria-label="Raphbee home">
-          <Image src="/logo_white.png" alt="Raphbee" width={132} height={42} priority />
+          <Image src={logoWhite} alt="Raphbee" width={132} height={42} priority />
         </Link>
         <nav className="desktop-links" aria-label="Main">
           {links.map(([label, href]) => <Link key={label} href={href}>{label}</Link>)}
