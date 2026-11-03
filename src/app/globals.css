@@ -130,7 +130,7 @@ button { font: inherit; }
   .brand-mark img { width: 120px; height: 120px; max-height: none; transform: translate(-56%, -50%); }
   .desktop-links, .nav-actions { display: none; }
   .mobile-menu { display: block; }
-  .hero-section { width: calc(100% - 32px); padding-top: 55px; }
+  .hero-section { width: calc(100% - 32px); padding-top: 40px; }
   .hero-grid { grid-template-columns: 1fr; gap: 31px; }
   .portrait-column, .hero-intro, .hero-notes { grid-column: auto; grid-row: auto; }
   .hero-intro { padding: 0; }
