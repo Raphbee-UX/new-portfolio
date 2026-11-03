@@ -124,7 +124,7 @@ button { font: inherit; }
   .note-block > p:last-child { font-size: 14px; }
 }
 @media (max-width: 760px) {
-  .header-wrap { padding: 14px 14px 0; }
+  .header-wrap { padding: 8px 14px 0; }
   .site-nav { min-height: 64px; padding: 6px 8px 6px 15px; }
   .brand-mark { flex-basis: 140px; width: 140px; height: 58px; padding: 0; background: transparent; }
   .brand-mark img { width: 120px; height: 120px; max-height: none; transform: translate(-56%, -50%); }
