@@ -14,15 +14,19 @@ export function SiteHeader() {
     <div className="availability-stack">
      <span className="availability"><i aria-hidden="true" />Open to projects</span>
      <div className="header-contact-links">
-      <a href="https://www.upwork.com/freelancers/~010976d055baaeefef" target="_blank" rel="noreferrer"><ArrowUpRight size={12} aria-hidden="true" /> Upwork</a>
-      <a href="mailto:raphaelolayeye@gmail.com">Mail</a>
+      <a href="https://www.upwork.com/freelancers/~010976d055baaeefef" target="_blank" rel="noreferrer"><Image src="/upwork-logo.png" alt="" width={14} height={14} /> Upwork</a>
+      <a href="mailto:raphaelolayeye@gmail.com"><Image src="/Gmail-logo.png" alt="" width={14} height={14} /> Inbox</a>
      </div>
     </div>
     <Link href="#contact" className="talk-button">Let&apos;s talk <ArrowUpRight size={14} /></Link>
    </div>
-   <a className="mobile-upwork-link" href="https://www.upwork.com/freelancers/~010976d055baaeefef" target="_blank" rel="noreferrer" aria-label="Visit my Upwork profile">
-    <span className="mobile-upwork-label">Hire on:</span><Image src="/upwork-logo.png" alt="Upwork" width={34} height={34} />
-   </a>
+   <div className="mobile-hire-links">
+    <span className="mobile-upwork-label">Hire on:</span>
+    <div className="mobile-hire-logos">
+     <a className="mobile-upwork-link" href="https://www.upwork.com/freelancers/~010976d055baaeefef" target="_blank" rel="noreferrer" aria-label="Visit my Upwork profile"><Image src="/upwork-logo.png" alt="Upwork" width={30} height={30} /></a>
+     <a className="mobile-inbox-link" href="mailto:raphaelolayeye@gmail.com" aria-label="Email Raphael"><Image src="/Gmail-logo.png" alt="Gmail" width={30} height={30} /></a>
+    </div>
+   </div>
    <details className="mobile-menu">
     <summary aria-label="Open navigation"><Menu size={19} /></summary>
     <nav aria-label="Mobile">{links.map(([label,href])=><Link key={label} href={href}>{label}</Link>)}<Link href="#contact">Let&apos;s talk <ArrowUpRight size={14} /></Link></nav>
