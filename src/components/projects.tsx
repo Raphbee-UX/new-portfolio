@@ -1,16 +1,44 @@
 "use client";
 
-import Image from "next/image";
-import { useEffect, useRef, useState, type MouseEvent } from "react";
+import Image, { type StaticImageData } from "next/image";
+import { createPortal } from "react-dom";
+import {
+  useEffect,
+  useRef,
+  useState,
+  useSyncExternalStore,
+  type MouseEvent,
+} from "react";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
-import { ArrowLeft, ArrowUpRight, ExternalLink } from "lucide-react";
+import {
+  ArrowLeft,
+  ArrowRight,
+  ArrowUpRight,
+  ExternalLink,
+  X,
+} from "lucide-react";
 
 import amieshaMockup from "../../amiesha-store.jpg";
 import jesusSpiritMockup from "../../jesuspirit.jpg";
 import minaShopMockup from "../../mina-shop.jpg";
 import zestyPawsMockup from "../../zesty-paws.jpg";
 
-const projects = [
+type Project = {
+  id: string;
+  number: string;
+  name: string;
+  category: string;
+  summary: string;
+  url: string;
+  image: StaticImageData;
+  overview: string;
+  context: string;
+  role: string;
+  work: string;
+  platforms: string;
+};
+
+const projects: Project[] = [
   {
     id: "amiesha",
     number: "01",
@@ -24,7 +52,6 @@ const projects = [
     role: "Role and contribution details to be added.",
     work: "Work completed details to be added.",
     platforms: "Platform and tool details have not been verified.",
-    outcomes: "No verified outcome information has been supplied.",
   },
   {
     id: "jesus-spirit",
@@ -39,14 +66,13 @@ const projects = [
     role: "Role and contribution details to be added.",
     work: "Work completed details to be added.",
     platforms: "Platform and tool details have not been verified.",
-    outcomes: "No verified outcome information has been supplied.",
   },
   {
     id: "mina-shop",
     number: "03",
     name: "Mina Shop",
     category: "Online retail",
-    summary: "An online store project. More specific business context will be added after confirmation.",
+    summary: "An online retail storefront. More specific project context will be added after confirmation.",
     url: "https://minashop.ca/",
     image: minaShopMockup,
     overview: "Project overview to be added.",
@@ -54,7 +80,6 @@ const projects = [
     role: "Role and contribution details to be added.",
     work: "Work completed details to be added.",
     platforms: "Platform and tool details have not been verified.",
-    outcomes: "No verified outcome information has been supplied.",
   },
   {
     id: "zesty-paws",
@@ -69,242 +94,359 @@ const projects = [
     role: "Role and contribution details to be added.",
     work: "Work completed details to be added.",
     platforms: "Platform and tool details have not been verified.",
-    outcomes: "No verified outcome information has been supplied.",
   },
-  {
-    id: "fable-pets",
-    number: "05",
-    name: "Fable Pets",
-    category: "Project category to be confirmed",
-    summary: "Project information and mockup imagery are still to be supplied.",
-    url: null,
-    image: null,
-    overview: "Project overview to be added.",
-    context: "Business and website context to be confirmed.",
-    role: "Role and contribution details to be added.",
-    work: "Work completed details to be added.",
-    platforms: "Platform and tool details have not been verified.",
-    outcomes: "No verified outcome information has been supplied.",
-  },
-] as const;
+];
 
-type Project = (typeof projects)[number];
+const subscribeToNothing = () => () => {};
+const getClientSnapshot = () => true;
+const getServerSnapshot = () => false;
+const totalPages = projects.length - 2;
 
-function ProjectArtwork({ project, className = "" }: { project: Project; className?: string }) {
+function ProjectImage({
+  project,
+  className = "",
+  sizes = "(max-width: 760px) 33vw, 32vw",
+}: {
+  project: Project;
+  className?: string;
+  sizes?: string;
+}) {
   return (
     <div className={"project-image-stage " + className}>
-      {project.image ? (
-        <Image
-          className="project-mockup"
-          src={project.image}
-          alt={project.name + " website mockup"}
-          fill
-          sizes="(max-width: 760px) 92vw, (max-width: 1100px) 48vw, 58vw"
-          priority={project.id === "amiesha"}
-        />
-      ) : (
-        <div className="project-image-placeholder">
-          <span className="project-placeholder-index">PROJECT {project.number}</span>
-          <strong>{project.name}</strong>
-          <span>Mockup image not supplied</span>
-        </div>
-      )}
+      <Image
+        className="project-mockup"
+        src={project.image}
+        alt={project.name + " website mockup"}
+        fill
+        sizes={sizes}
+        style={{ objectFit: "contain" }}
+        priority={project.id === "amiesha"}
+      />
     </div>
   );
 }
 
-function ProjectActions({
-  project,
-  onExplore,
-}: {
-  project: Project;
-  onExplore: (event: MouseEvent<HTMLButtonElement>) => void;
-}) {
+function ProjectDetails({ project }: { project: Project }) {
   return (
-    <div className="project-actions">
-      <button className="project-details-button" type="button" onClick={onExplore}>
-        Explore project
-        <ArrowUpRight size={15} strokeWidth={1.8} />
-      </button>
-      {project.url ? (
-        <a className="project-live-link" href={project.url} target="_blank" rel="noopener noreferrer">
-          Visit live website
-          <ExternalLink size={13} strokeWidth={1.8} />
-        </a>
-      ) : (
-        <span className="project-live-unavailable">Live link to be added</span>
-      )}
+    <div className="project-detail-content">
+      <p className="project-detail-summary">{project.summary}</p>
+
+      <div className="project-detail-fields">
+        <section className="project-detail-field project-detail-field-wide">
+          <h4>Project overview</h4>
+          <p>{project.overview}</p>
+        </section>
+        <section className="project-detail-field">
+          <h4>Website / business context</h4>
+          <p>{project.context}</p>
+        </section>
+        <section className="project-detail-field">
+          <h4>My role and contribution</h4>
+          <p>{project.role}</p>
+        </section>
+        <section className="project-detail-field">
+          <h4>Work completed</h4>
+          <p>{project.work}</p>
+        </section>
+        <section className="project-detail-field">
+          <h4>Platforms and tools</h4>
+          <p>{project.platforms}</p>
+        </section>
+      </div>
+
+      <a
+        className="project-live-link project-detail-live-link"
+        href={project.url}
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        Visit live website
+        <ExternalLink size={14} strokeWidth={1.8} />
+      </a>
     </div>
   );
 }
 
 export function Projects() {
   const sectionRef = useRef<HTMLElement | null>(null);
+  const carouselRef = useRef<HTMLDivElement | null>(null);
+  const dialogRef = useRef<HTMLElement | null>(null);
   const detailTitleRef = useRef<HTMLHeadingElement | null>(null);
-  const projectsTitleRef = useRef<HTMLHeadingElement | null>(null);
-  const hasOpenedProject = useRef(false);
+  const lastTriggerRef = useRef<HTMLButtonElement | null>(null);
+  const modalScrollPosition = useRef(0);
+
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
+  const [activePage, setActivePage] = useState(0);
+
+  const canUsePortal = useSyncExternalStore(
+    subscribeToNothing,
+    getClientSnapshot,
+    getServerSnapshot,
+  );
   const reducedMotion = useReducedMotion();
-  const featuredProject = projects[0];
-  const supportingProjects = projects.slice(1);
 
-  useEffect(() => {
-    if (!selectedProject) {
-      if (hasOpenedProject.current) {
-        projectsTitleRef.current?.focus({ preventScroll: true });
-      }
-      return;
-    }
+  function goToPage(page: number) {
+    const safePage = Math.max(0, Math.min(totalPages - 1, page));
+    const carousel = carouselRef.current;
+    if (!carousel) return;
 
-    detailTitleRef.current?.focus({ preventScroll: true });
-    const handleKeyDown = (event: KeyboardEvent) => {
-      if (event.key === "Escape") setSelectedProject(null);
-    };
-    window.addEventListener("keydown", handleKeyDown);
-    return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [selectedProject]);
-
-  function openProject(project: Project, event: MouseEvent<HTMLButtonElement>) {
-    event.preventDefault();
-    hasOpenedProject.current = true;
-    setSelectedProject(project);
-    sectionRef.current?.scrollIntoView({
+    const cardStep = carousel.clientWidth / 3;
+    carousel.scrollTo({
+      left: safePage * cardStep,
       behavior: reducedMotion ? "auto" : "smooth",
-      block: "start",
     });
   }
 
-  const renderActions = (project: Project) => (
-    <ProjectActions project={project} onExplore={(event) => openProject(project, event)} />
-  );
+  function handleCarouselScroll() {
+    const carousel = carouselRef.current;
+    if (!carousel) return;
+
+    const cardStep = carousel.clientWidth / 3;
+    if (!cardStep) return;
+
+    const page = Math.max(
+      0,
+      Math.min(totalPages - 1, Math.round(carousel.scrollLeft / cardStep)),
+    );
+    setActivePage((current) => current === page ? current : page);
+  }
+
+  function openProject(project: Project, event: MouseEvent<HTMLButtonElement>) {
+    lastTriggerRef.current = event.currentTarget;
+    modalScrollPosition.current = window.scrollY;
+    setSelectedProject(project);
+  }
+
+  function closeProject() {
+    setSelectedProject(null);
+  }
+
+  useEffect(() => {
+    if (!selectedProject) return;
+
+    const body = document.body;
+    const scrollY = modalScrollPosition.current;
+    const previousBodyStyles = {
+      position: body.style.position,
+      top: body.style.top,
+      width: body.style.width,
+      overflow: body.style.overflow,
+    };
+
+    body.style.position = "fixed";
+    body.style.top = "-" + scrollY + "px";
+    body.style.width = "100%";
+    body.style.overflow = "hidden";
+
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        setSelectedProject(null);
+        return;
+      }
+      if (event.key !== "Tab" || !dialogRef.current) return;
+
+      const focusable = dialogRef.current.querySelectorAll<HTMLElement>(
+        'button, a[href], [tabindex]:not([tabindex="-1"])',
+      );
+      if (!focusable.length) return;
+
+      const first = focusable[0];
+      const last = focusable[focusable.length - 1];
+
+      if (event.shiftKey && document.activeElement === first) {
+        event.preventDefault();
+        last.focus();
+      } else if (!event.shiftKey && document.activeElement === last) {
+        event.preventDefault();
+        first.focus();
+      }
+    };
+
+    document.addEventListener("keydown", handleKeyDown);
+    dialogRef.current?.focus();
+
+    return () => {
+      document.removeEventListener("keydown", handleKeyDown);
+      body.style.position = previousBodyStyles.position;
+      body.style.top = previousBodyStyles.top;
+      body.style.width = previousBodyStyles.width;
+      body.style.overflow = previousBodyStyles.overflow;
+      window.scrollTo(0, scrollY);
+      lastTriggerRef.current?.focus({ preventScroll: true });
+    };
+  }, [selectedProject]);
+
+  const currentPageProjects = projects.slice(activePage, activePage + 3);
 
   return (
-    <section ref={sectionRef} className="projects-section" id="work" aria-labelledby="projects-title">
+    <section
+      ref={sectionRef}
+      className="projects-section"
+      id="work"
+      aria-labelledby="projects-title"
+    >
       <div className="projects-intro">
         <div>
           <p className="projects-eyebrow">SELECTED WORK</p>
-          <h2 id="projects-title" ref={projectsTitleRef} tabIndex={-1}>Projects I&apos;ve Worked On</h2>
+          <h2 id="projects-title" className="projects-title">
+            Projects I&apos;ve Worked On
+          </h2>
+          <p className="projects-subtitle">E-commerce Development</p>
         </div>
         <p className="projects-summary">
-          A selection of websites and digital experiences, presented with room to explore the work behind each project.
+          A selection of e-commerce storefronts and digital shopping experiences.
         </p>
       </div>
 
-      <AnimatePresence mode="wait" initial={false}>
-        {selectedProject ? (
-          <motion.div
-            className="project-detail-view"
-            key={selectedProject.id + "-detail"}
-            initial={reducedMotion ? false : { opacity: 0, y: 14 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={reducedMotion ? undefined : { opacity: 0, y: -10 }}
-            transition={{ duration: reducedMotion ? 0 : 0.32, ease: [0.22, 1, 0.36, 1] }}
-          >
-            <div className="project-detail-topline">
-              <button className="project-back-button" type="button" onClick={() => setSelectedProject(null)}>
-                <ArrowLeft size={15} />
-                Back to selected work
-              </button>
-              <span>PROJECT {selectedProject.number} / 05</span>
-            </div>
-
-            <div className="project-detail-layout">
-              <div className="project-detail-art">
-                <ProjectArtwork project={selectedProject} />
-              </div>
-
-              <div className="project-detail-copy">
-                <p className="project-detail-category">{selectedProject.category}</p>
-                <h3 ref={detailTitleRef} tabIndex={-1}>{selectedProject.name}</h3>
-                <p className="project-detail-summary">{selectedProject.summary}</p>
-                {renderActions(selectedProject)}
-                <div className="project-detail-fields">
-                  <section className="project-detail-field project-detail-field-wide">
-                    <h4>Project overview</h4>
-                    <p>{selectedProject.overview}</p>
-                  </section>
-                  <section className="project-detail-field">
-                    <h4>Business / website context</h4>
-                    <p>{selectedProject.context}</p>
-                  </section>
-                  <section className="project-detail-field">
-                    <h4>My role and contribution</h4>
-                    <p>{selectedProject.role}</p>
-                  </section>
-                  <section className="project-detail-field">
-                    <h4>Work completed</h4>
-                    <p>{selectedProject.work}</p>
-                  </section>
-                  <section className="project-detail-field">
-                    <h4>Platforms and tools</h4>
-                    <p>{selectedProject.platforms}</p>
-                  </section>
-                  <section className="project-detail-field project-detail-field-wide">
-                    <h4>Outcomes</h4>
-                    <p>{selectedProject.outcomes}</p>
-                  </section>
-                </div>
-              </div>
-            </div>
-          </motion.div>
-        ) : (
-          <motion.div
-            className="projects-showcase"
-            key="projects-showcase"
-            initial={reducedMotion ? false : { opacity: 0, y: 12 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={reducedMotion ? undefined : { opacity: 0, y: -8 }}
-            transition={{ duration: reducedMotion ? 0 : 0.34, ease: [0.22, 1, 0.36, 1] }}
-          >
-            <motion.article
-              className="project-feature"
-              initial={reducedMotion ? false : { opacity: 0, y: 22 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, amount: 0.18 }}
-              transition={{ duration: reducedMotion ? 0 : 0.58, ease: [0.22, 1, 0.36, 1] }}
-            >
-              <div className="project-feature-art">
-                <ProjectArtwork project={featuredProject} />
-              </div>
-              <div className="project-feature-copy">
-                <p className="project-number">{featuredProject.number} / FEATURED PROJECT</p>
-                <p className="project-category">{featuredProject.category}</p>
-                <h3>{featuredProject.name}</h3>
-                <p className="project-summary">{featuredProject.summary}</p>
-                {renderActions(featuredProject)}
-              </div>
-            </motion.article>
-
-            <div className="projects-mosaic">
-              {supportingProjects.map((project, index) => (
+      <div className="projects-carousel-shell">
+        <div
+          ref={carouselRef}
+          className="projects-carousel-viewport"
+          aria-label="E-commerce development projects"
+          onScroll={handleCarouselScroll}
+        >
+          <div className="projects-carousel-track">
+            {projects.map((project, index) => {
+              const isCentre = index === activePage + 1;
+              return (
                 <motion.article
-                  className={"project-tile project-tile-" + project.id}
+                  className={"project-carousel-item" + (isCentre ? " is-centre" : "")}
                   key={project.id}
-                  initial={reducedMotion ? false : { opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true, amount: 0.16 }}
+                  animate={{ scale: isCentre ? 1.035 : 0.97, y: isCentre ? -5 : 0, opacity: isCentre ? 1 : 0.88 }}
                   transition={{
-                    duration: reducedMotion ? 0 : 0.56,
-                    delay: reducedMotion ? 0 : index * 0.075,
+                    duration: reducedMotion ? 0 : 0.34,
                     ease: [0.22, 1, 0.36, 1],
                   }}
+                  aria-current={isCentre ? "true" : undefined}
                 >
-                  <ProjectArtwork project={project} />
-                  <div className="project-tile-copy">
-                    <div className="project-tile-meta">
-                      <span>{project.number} / SELECTED PROJECT</span>
-                      <span>{project.category}</span>
-                    </div>
-                    <h3>{project.name}</h3>
-                    <p>{project.summary}</p>
-                    {renderActions(project)}
-                  </div>
+                  <button
+                    className="project-card-trigger"
+                    type="button"
+                    onClick={(event) => openProject(project, event)}
+                    aria-label={"Open " + project.name + " project details"}
+                    aria-haspopup="dialog"
+                  >
+                    <ProjectImage project={project} />
+                    <span className="project-card-copy">
+                      <span className="project-card-meta">
+                        <span>{project.number} / E-COMMERCE</span>
+                        <span>{project.category}</span>
+                      </span>
+                      <span className="project-card-name">{project.name}</span>
+                      <span className="project-card-summary">{project.summary}</span>
+                      <span className="project-card-open">
+                        Explore project
+                        <ArrowUpRight size={14} strokeWidth={1.8} />
+                      </span>
+                    </span>
+                  </button>
                 </motion.article>
-              ))}
-            </div>
+              );
+            })}
+          </div>
+        </div>
+
+        <div className="projects-carousel-controls">
+          <button
+            className="project-carousel-arrow project-carousel-previous"
+            type="button"
+            onClick={() => goToPage(activePage - 1)}
+            disabled={activePage === 0}
+            aria-label="Previous projects"
+          >
+            <ArrowLeft size={17} strokeWidth={1.7} />
+          </button>
+
+          <div className="project-carousel-counter" aria-live="polite">
+            <span>0{activePage + 1}</span>
+            <span className="project-counter-divider" />
+            <span>0{totalPages}</span>
+          </div>
+
+          <button
+            className="project-carousel-arrow project-carousel-next"
+            type="button"
+            onClick={() => goToPage(activePage + 1)}
+            disabled={activePage === totalPages - 1}
+            aria-label="Next projects"
+          >
+            <ArrowRight size={17} strokeWidth={1.7} />
+          </button>
+        </div>
+
+        <div className="project-carousel-pagination" aria-label="Carousel pagination">
+          {Array.from({ length: totalPages }, (_, page) => (
+            <button
+              className={"project-pagination-dot" + (activePage === page ? " is-active" : "")}
+              key={page}
+              type="button"
+              onClick={() => goToPage(page)}
+              aria-label={"Go to project page " + (page + 1)}
+              aria-current={activePage === page ? "page" : undefined}
+            />
+          ))}
+        </div>
+      </div>
+
+      {canUsePortal && selectedProject && createPortal(
+        <AnimatePresence>
+          <motion.div
+            className="project-dialog-backdrop"
+            key="project-dialog-backdrop"
+            initial={reducedMotion ? false : { opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={reducedMotion ? undefined : { opacity: 0 }}
+            transition={{ duration: reducedMotion ? 0 : 0.22 }}
+            onClick={closeProject}
+          >
+            <motion.section
+              ref={dialogRef}
+              className="project-dialog"
+              role="dialog"
+              aria-modal="true"
+              aria-labelledby="project-dialog-title"
+              tabIndex={-1}
+              initial={reducedMotion ? false : { x: "100%" }}
+              animate={{ x: 0 }}
+              exit={reducedMotion ? undefined : { x: "100%" }}
+              transition={{ duration: reducedMotion ? 0 : 0.36, ease: [0.22, 1, 0.36, 1] }}
+              onClick={(event) => event.stopPropagation()}
+            >
+              <div className="project-dialog-inner">
+                <div className="project-dialog-topline">
+                  <span>PROJECT DETAILS / {selectedProject.number}</span>
+                  <button
+                    className="project-dialog-close"
+                    type="button"
+                    onClick={closeProject}
+                    aria-label={"Close " + selectedProject.name + " project details"}
+                  >
+                    <X size={19} />
+                  </button>
+                </div>
+
+                <div className="project-dialog-layout">
+                  <div className="project-dialog-art">
+                    <ProjectImage
+                      project={selectedProject}
+                      sizes="(max-width: 760px) 100vw, 52vw"
+                    />
+                  </div>
+
+                  <div className="project-dialog-copy">
+                    <p className="project-detail-category">{selectedProject.category}</p>
+                    <h3 id="project-dialog-title" ref={detailTitleRef} tabIndex={-1}>
+                      {selectedProject.name}
+                    </h3>
+                    <ProjectDetails project={selectedProject} />
+                  </div>
+                </div>
+              </div>
+            </motion.section>
           </motion.div>
-        )}
-      </AnimatePresence>
+        </AnimatePresence>,
+        document.body,
+      )}
     </section>
   );
 }
