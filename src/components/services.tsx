@@ -94,7 +94,7 @@ const cardVariants = {
   visible: (index: number) => ({
     opacity: 1,
     y: 0,
-    transition: { duration: 0.58, delay: index * 0.1, ease: [0.22, 1, 0.36, 1] as const },
+    transition: { duration: 0.66, delay: index * 0.14, ease: [0.22, 1, 0.36, 1] as const },
   }),
 };
 
@@ -103,13 +103,22 @@ function whatsappUrl(service: Service) {
 }
 
 function PlatformMarks({ service }: { service: Service }) {
+  const reducedMotion = useReducedMotion();
+
   return (
     <div
       className="service-platforms"
       aria-label={"Platforms and tools: " + service.platforms.map((platform) => platform.name).join(", ")}
     >
-      {service.platforms.map((platform) => (
-        <span className="service-platform" key={platform.name}>
+      {service.platforms.map((platform, index) => (
+        <motion.span
+          className="service-platform"
+          key={platform.name}
+          initial={reducedMotion ? false : { opacity: 0, y: 7 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.7 }}
+          transition={{ duration: reducedMotion ? 0 : 0.34, delay: reducedMotion ? 0 : index * 0.045, ease: [0.22, 1, 0.36, 1] }}
+        >
           <Image
             className="service-platform-logo"
             src={platform.image}
@@ -119,7 +128,7 @@ function PlatformMarks({ service }: { service: Service }) {
             aria-hidden="true"
           />
           <span>{platform.name}</span>
-        </span>
+        </motion.span>
       ))}
     </div>
   );
@@ -231,7 +240,12 @@ useEffect(() => {
 
   return (
     <section ref={sectionRef} className="services-section" aria-labelledby="services-title">
-      <div className="services-intro">
+      <motion.div
+        className="services-intro"
+        initial={reducedMotion ? false : { opacity: 0, y: 16 }}
+        animate={reducedMotion ? undefined : inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 16 }}
+        transition={{ duration: reducedMotion ? 0 : 0.62, ease: [0.22, 1, 0.36, 1] }}
+      >
         <div>
           <p className="services-eyebrow">WHAT I DO</p>
           <h2 id="services-title">Services built around your business.</h2>
@@ -240,7 +254,7 @@ useEffect(() => {
           E-commerce, paid growth and automation brought together to help businesses build,
           grow and streamline their online operations.
         </p>
-      </div>
+      </motion.div>
 
       <div className="services-timeline">
         <span className="services-timeline-line" aria-hidden="true" />
@@ -266,7 +280,12 @@ useEffect(() => {
                   aria-expanded={isExpanded || isMobileOpen}
                   aria-controls={(isExpanded || isMobileOpen) ? "service-panel-" + service.id : undefined}
                 >
-                  <span className="service-image-frame">
+                  <motion.span
+                    className="service-image-frame"
+                    initial={reducedMotion ? false : { opacity: 0.55, scale: 0.99 }}
+                    animate={reducedMotion ? undefined : inView ? { opacity: 1, scale: 1 } : { opacity: 0.55, scale: 0.99 }}
+                    transition={{ duration: reducedMotion ? 0 : 0.62, delay: reducedMotion ? 0 : index * 0.14 + 0.08, ease: [0.22, 1, 0.36, 1] }}
+                  >
                     <Image
                       className="service-thumb-image"
                       src={service.image}
@@ -275,7 +294,7 @@ useEffect(() => {
                       sizes="(max-width: 760px) 82vw, (max-width: 1120px) 42vw, 34vw"
                       style={{ objectFit: "contain" }}
                     />
-                  </span>
+                  </motion.span>
                   <span className="service-detail-meta">
                     <span>{service.category}</span>
                     <span>{service.number}</span>
