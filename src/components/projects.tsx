@@ -226,16 +226,16 @@ export function Projects() {
     const body = document.body;
     const scrollY = modalScrollPosition.current;
     const previousBodyStyles = {
-      position: body.style.position,
-      top: body.style.top,
-      width: body.style.width,
-      overflow: body.style.overflow,
+      position: body.style.getPropertyValue("position"),
+      top: body.style.getPropertyValue("top"),
+      width: body.style.getPropertyValue("width"),
+      overflow: body.style.getPropertyValue("overflow"),
     };
 
-    body.style.position = "fixed";
-    body.style.top = "-" + scrollY + "px";
-    body.style.width = "100%";
-    body.style.overflow = "hidden";
+    body.style.setProperty("position", "fixed");
+    body.style.setProperty("top", "-" + scrollY + "px");
+    body.style.setProperty("width", "100%");
+    body.style.setProperty("overflow", "hidden");
 
     const handleKeyDown = (event: KeyboardEvent) => {
       if (event.key === "Escape") {
@@ -266,10 +266,13 @@ export function Projects() {
 
     return () => {
       document.removeEventListener("keydown", handleKeyDown);
-      body.style.position = previousBodyStyles.position;
-      body.style.top = previousBodyStyles.top;
-      body.style.width = previousBodyStyles.width;
-      body.style.overflow = previousBodyStyles.overflow;
+      Object.entries(previousBodyStyles).forEach(([property, value]) => {
+        if (value) {
+          body.style.setProperty(property, value);
+        } else {
+          body.style.removeProperty(property);
+        }
+      });
       window.scrollTo(0, scrollY);
       lastTriggerRef.current?.focus({ preventScroll: true });
     };
