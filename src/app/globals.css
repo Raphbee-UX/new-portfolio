@@ -253,3 +253,160 @@ button { font: inherit; }
   .whatsapp-fab { width: 70px; height: 70px; }
   .whatsapp-fab img { width: 60px; height: 60px; }
 }
+
+
+/* Services */
+.services-section {
+  width: min(calc(100% - 7vw), var(--max-width));
+  margin: 0 auto;
+  padding: 46px 0 112px;
+}
+.services-intro {
+  display: grid;
+  grid-template-columns: minmax(0, 1.15fr) minmax(280px, .65fr);
+  align-items: end;
+  gap: clamp(32px, 7vw, 112px);
+  margin-bottom: 48px;
+}
+.services-eyebrow {
+  margin: 0 0 17px;
+  color: var(--muted);
+  font-size: 9px;
+  font-weight: 750;
+  letter-spacing: .17em;
+}
+.services-intro h2 {
+  max-width: 720px;
+  margin: 0;
+  font-family: var(--font-space-grotesk), sans-serif;
+  font-size: clamp(2.5rem, 5.4vw, 5.2rem);
+  font-weight: 600;
+  line-height: .96;
+  letter-spacing: -.075em;
+}
+.services-summary {
+  max-width: 390px;
+  margin: 0 0 5px auto;
+  color: #656259;
+  font-size: 13px;
+  line-height: 1.8;
+}
+.services-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+}
+.service-pillar {
+  position: relative;
+  display: flex;
+  min-width: 0;
+  min-height: 350px;
+  flex-direction: column;
+  padding: 25px clamp(20px, 2.5vw, 38px) 30px;
+  border-right: 1px solid var(--line);
+}
+.service-pillar:first-child { padding-left: 0; }
+.service-pillar:last-child { padding-right: 0; border-right: 0; }
+.service-meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 47px;
+}
+.service-number {
+  color: var(--muted);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: .12em;
+}
+.service-icon { color: #77746c; }
+.service-pillar h3 {
+  max-width: 330px;
+  margin: 0;
+  font-family: var(--font-space-grotesk), sans-serif;
+  font-size: clamp(1.45rem, 2.1vw, 2rem);
+  font-weight: 600;
+  line-height: 1.08;
+  letter-spacing: -.055em;
+}
+.service-description {
+  max-width: 340px;
+  min-height: 66px;
+  margin: 14px 0 25px;
+  color: #6d6a62;
+  font-size: 12px;
+  line-height: 1.75;
+}
+.service-capabilities {
+  display: grid;
+  gap: 12px;
+  margin: auto 0 0;
+  padding: 20px 0 0;
+  border-top: 1px solid var(--line-soft);
+  list-style: none;
+}
+.service-capabilities li {
+  color: #45433d;
+  font-size: 11px;
+  line-height: 1.4;
+}
+.service-index {
+  position: absolute;
+  right: clamp(20px, 2.5vw, 38px);
+  bottom: 29px;
+  display: grid;
+  width: 25px;
+  height: 25px;
+  place-items: center;
+  border: 1px solid var(--line-soft);
+  border-radius: 50%;
+  color: #77746c;
+}
+.service-pillar:last-child .service-index { right: 0; }
+@media (max-width: 1120px) {
+  .services-section { width: min(calc(100% - 6vw), var(--max-width)); }
+  .service-pillar { min-height: 370px; padding-right: 22px; padding-left: 22px; }
+  .service-pillar:first-child { padding-left: 0; }
+  .service-pillar:last-child { padding-right: 0; }
+}
+@media (max-width: 760px) {
+  .services-section {
+    width: calc(100% - 32px);
+    padding: 28px 0 78px;
+  }
+  .services-intro {
+    grid-template-columns: 1fr;
+    align-items: start;
+    gap: 17px;
+    margin-bottom: 32px;
+  }
+  .services-eyebrow { margin-bottom: 13px; }
+  .services-intro h2 {
+    max-width: 560px;
+    font-size: clamp(2.35rem, 10.5vw, 4rem);
+    line-height: .98;
+  }
+  .services-summary {
+    max-width: 520px;
+    margin: 0;
+    font-size: 12px;
+    line-height: 1.75;
+  }
+  .services-grid { grid-template-columns: 1fr; }
+  .service-pillar,
+  .service-pillar:first-child,
+  .service-pillar:last-child {
+    min-height: 0;
+    padding: 22px 0 27px;
+    border-right: 0;
+    border-bottom: 1px solid var(--line);
+  }
+  .service-pillar:last-child { border-bottom: 0; }
+  .service-meta { margin-bottom: 25px; }
+  .service-pillar h3 { max-width: 100%; font-size: 1.65rem; }
+  .service-description { min-height: 0; max-width: 520px; margin: 10px 0 19px; }
+  .service-capabilities { gap: 10px; margin-top: 0; padding-top: 17px; }
+  .service-capabilities li { font-size: 11px; }
+  .service-index { right: 0; bottom: 27px; }
+}
