@@ -183,7 +183,7 @@ export function Projects() {
       <div className="projects-intro">
         <div>
           <p className="projects-eyebrow">SELECTED WORK</p>
-          <h2 id="projects-title" ref={projectsTitleRef} tabIndex={-1}>Projects I've Worked On</h2>
+          <h2 id="projects-title" ref={projectsTitleRef} tabIndex={-1}>Projects I&apos;ve Worked On</h2>
         </div>
         <p className="projects-summary">
           A selection of websites and digital experiences, presented with room to explore the work behind each project.
