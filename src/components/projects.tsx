@@ -171,7 +171,6 @@ export function Projects() {
   const sectionRef = useRef<HTMLElement | null>(null);
   const carouselRef = useRef<HTMLDivElement | null>(null);
   const dialogRef = useRef<HTMLElement | null>(null);
-  const detailTitleRef = useRef<HTMLHeadingElement | null>(null);
   const lastTriggerRef = useRef<HTMLButtonElement | null>(null);
   const modalScrollPosition = useRef(0);
 
@@ -263,7 +262,7 @@ export function Projects() {
     };
 
     document.addEventListener("keydown", handleKeyDown);
-    dialogRef.current?.focus();
+    dialogRef.current?.querySelector<HTMLButtonElement>(".project-dialog-close")?.focus();
 
     return () => {
       document.removeEventListener("keydown", handleKeyDown);
@@ -275,8 +274,6 @@ export function Projects() {
       lastTriggerRef.current?.focus({ preventScroll: true });
     };
   }, [selectedProject]);
-
-  const currentPageProjects = projects.slice(activePage, activePage + 3);
 
   return (
     <section
@@ -388,10 +385,11 @@ export function Projects() {
         </div>
       </div>
 
-      {canUsePortal && selectedProject && createPortal(
+      {canUsePortal && createPortal(
         <AnimatePresence>
-          <motion.div
-            className="project-dialog-backdrop"
+          {selectedProject && (
+            <motion.div
+              className="project-dialog-backdrop"
             key="project-dialog-backdrop"
             initial={reducedMotion ? false : { opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -435,7 +433,7 @@ export function Projects() {
 
                   <div className="project-dialog-copy">
                     <p className="project-detail-category">{selectedProject.category}</p>
-                    <h3 id="project-dialog-title" ref={detailTitleRef} tabIndex={-1}>
+                    <h3 id="project-dialog-title">
                       {selectedProject.name}
                     </h3>
                     <ProjectDetails project={selectedProject} />
@@ -443,7 +441,8 @@ export function Projects() {
                 </div>
               </div>
             </motion.section>
-          </motion.div>
+            </motion.div>
+          )}
         </AnimatePresence>,
         document.body,
       )}
