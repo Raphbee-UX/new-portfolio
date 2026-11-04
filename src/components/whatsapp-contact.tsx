@@ -28,7 +28,7 @@ export function WhatsAppContact() {
    animate={reducedMotion?undefined:{y:[0,-3,0],scale:[1,1.015,1]}}
    transition={reducedMotion?undefined:{duration:4.5,ease:"easeInOut",repeat:Infinity}}
    whileHover={reducedMotion?undefined:{scale:1.06,y:-2}} whileTap={reducedMotion?undefined:{scale:.97}}>
-   <span className="whatsapp-glow" aria-hidden="true"/><Image src="/whatsapp-logo.png" alt="" width={38} height={38}/>
+   <span className="whatsapp-glow" aria-hidden="true"/><Image src="https://raw.githubusercontent.com/Raphbee-UX/new-portfolio/main/whatsapp-logo.png" alt="" width={52} height={52} style={{ width: 52, height: 52 }}/>
   </motion.a>
  </div>;
 }
