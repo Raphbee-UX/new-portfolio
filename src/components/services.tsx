@@ -1,45 +1,51 @@
 "use client";
 
 import { useRef } from "react";
-import { ArrowUpRight, ShoppingBag, TrendingUp, Workflow } from "lucide-react";
+import { ArrowUpRight } from "lucide-react";
 import { motion, useInView, useReducedMotion } from "framer-motion";
 
 const services = [
   {
     number: "01",
+    category: "BUILD / SERVICE",
+    visualTitle: "SHOPIFY",
+    visualSubtitle: "STOREFRONTS · E-COMMERCE",
     title: "E-commerce Development",
     description:
-      "Build a stronger storefront with a considered customer experience and the systems behind it.",
-    icon: ShoppingBag,
+      "Thoughtful online stores built to make shopping simpler, strengthen your brand and support business growth.",
     capabilities: [
-      "Shopify store development",
-      "Store redesign and optimisation",
-      "Product catalogue management",
-      "E-commerce setup and integrations",
+      "Shopify development",
+      "Store redesign",
+      "Catalogue management",
+      "E-commerce integrations",
     ],
   },
   {
     number: "02",
+    category: "GROW / SERVICE",
+    visualTitle: "PAID GROWTH",
+    visualSubtitle: "META ADS · CONVERSION",
     title: "Paid Growth",
     description:
-      "Bring structure to paid campaigns and creative so every decision has a clearer purpose.",
-    icon: TrendingUp,
+      "Structured campaigns and considered creative that help your business reach the right people and turn attention into action.",
     capabilities: [
       "Meta Ads setup",
-      "Campaign structure and management",
+      "Campaign management",
       "Ad creative support",
-      "Conversion-focused optimisation",
+      "Conversion optimisation",
     ],
   },
   {
     number: "03",
+    category: "STREAMLINE / SERVICE",
+    visualTitle: "AI + FLOW",
+    visualSubtitle: "AUTOMATION · INTEGRATIONS",
     title: "Automation & Integrations",
     description:
-      "Connect the tools and repetitive tasks that keep your business moving behind the scenes.",
-    icon: Workflow,
+      "Connected tools and practical workflows that reduce repetitive work and keep leads and business processes moving.",
     capabilities: [
       "n8n workflow automation",
-      "API and webhook integrations",
+      "API & webhook integrations",
       "Lead and enquiry automation",
       "Business process automation",
     ],
@@ -57,7 +63,7 @@ const cardVariants = {
 
 export function Services() {
   const sectionRef = useRef<HTMLElement>(null);
-  const inView = useInView(sectionRef, { once: true, amount: 0.16 });
+  const inView = useInView(sectionRef, { once: true, amount: 0.12 });
   const reducedMotion = useReducedMotion();
 
   return (
@@ -73,39 +79,43 @@ export function Services() {
         </p>
       </div>
 
-      <div className="services-grid">
-        {services.map((service, index) => {
-          const Icon = service.icon;
-
-          return (
-            <motion.article
-              className="service-pillar"
-              key={service.number}
-              custom={index}
-              variants={cardVariants}
-              initial={reducedMotion ? false : "hidden"}
-              animate={reducedMotion ? undefined : inView ? "visible" : "hidden"}
-            >
-              <div className="service-meta">
-                <span className="service-number">{service.number}</span>
-                <Icon className="service-icon" size={21} strokeWidth={1.5} aria-hidden="true" />
+      <div className="services-timeline">
+        <span className="services-timeline-line" aria-hidden="true" />
+        {services.map((service, index) => (
+          <motion.article
+            className={`service-entry service-entry-${index + 1}`}
+            key={service.number}
+            custom={index}
+            variants={cardVariants}
+            initial={reducedMotion ? false : "hidden"}
+            animate={reducedMotion ? undefined : inView ? "visible" : "hidden"}
+          >
+            <span className="service-timeline-node" aria-hidden="true">{service.number}</span>
+            <div className="service-card">
+              <div className="service-visual">
+                <span className="service-visual-count">{service.number} / 03</span>
+                <div className="service-visual-copy">
+                  <span className="service-visual-title">{service.visualTitle}</span>
+                  <span className="service-visual-subtitle">{service.visualSubtitle}</span>
+                </div>
+                <span className="service-visual-arrow" aria-hidden="true">
+                  <ArrowUpRight size={16} strokeWidth={1.5} />
+                </span>
               </div>
-
+              <div className="service-detail-meta">
+                <span>{service.category}</span>
+                <span>{service.number}</span>
+              </div>
               <h3>{service.title}</h3>
               <p className="service-description">{service.description}</p>
-
               <ul className="service-capabilities">
                 {service.capabilities.map((capability) => (
                   <li key={capability}>{capability}</li>
                 ))}
               </ul>
-
-              <span className="service-index" aria-hidden="true">
-                <ArrowUpRight size={15} strokeWidth={1.6} />
-              </span>
-            </motion.article>
-          );
-        })}
+            </div>
+          </motion.article>
+        ))}
       </div>
     </section>
   );
