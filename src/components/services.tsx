@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import { createPortal } from "react-dom";
-import { useEffect, useRef, useState, type MouseEvent } from "react";
+import { useEffect, useRef, useState, useSyncExternalStore, type MouseEvent } from "react";
 import { AnimatePresence, motion, useInView, useReducedMotion } from "framer-motion";
 import { ArrowUpRight, ChevronDown, X } from "lucide-react";
 
@@ -85,6 +85,10 @@ const services = [
 
 type Service = (typeof services)[number];
 
+const subscribeToNothing = () => () => {};
+const getClientSnapshot = () => true;
+const getServerSnapshot = () => false;
+
 const cardVariants = {
   hidden: { opacity: 0, y: 22 },
   visible: (index: number) => ({
@@ -152,16 +156,12 @@ export function Services() {
   const mobileScrollPosition = useRef(0);
   const [desktopExpandedId, setDesktopExpandedId] = useState<string | null>(null);
   const [mobileOpenId, setMobileOpenId] = useState<string | null>(null);
-  const [portalRoot, setPortalRoot] = useState<HTMLElement | null>(null);
+  const canUsePortal = useSyncExternalStore(subscribeToNothing, getClientSnapshot, getServerSnapshot);
   const inView = useInView(sectionRef, { once: true, amount: 0.12 });
   const reducedMotion = useReducedMotion();
   const mobileService = services.find((service) => service.id === mobileOpenId) ?? null;
 
-  useEffect(() => {
-    setPortalRoot(document.body);
-  }, []);
-
-  useEffect(() => {
+useEffect(() => {
     if (!mobileOpenId) return;
 
     const body = document.body;
@@ -311,7 +311,7 @@ export function Services() {
         })}
       </div>
 
-      {portalRoot && createPortal(
+      {canUsePortal && mobileService && createPortal(
         <AnimatePresence>
           {mobileService && (
             <motion.div
@@ -373,7 +373,7 @@ export function Services() {
             </motion.div>
           )}
         </AnimatePresence>,
-        portalRoot,
+        document.body,
       )}
     </section>
   );
