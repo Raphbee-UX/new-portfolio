@@ -10,32 +10,28 @@ import {
   type MouseEvent,
 } from "react";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
-import {
-  ArrowLeft,
-  ArrowRight,
-  ArrowUpRight,
-  ExternalLink,
-  X,
-} from "lucide-react";
+import { ArrowLeft, ArrowRight, ArrowUpRight, ExternalLink, X } from "lucide-react";
 
 import amieshaMockup from "../../amiesha-store.jpg";
 import jesusSpiritMockup from "../../jesuspirit.jpg";
 import minaShopMockup from "../../mina-shop.jpg";
 import zestyPawsMockup from "../../zesty-paws.jpg";
 
+type ProjectDetailsData = {
+  overview?: string;
+  websiteContext?: string;
+  roleAndContribution?: string;
+  workCompleted?: string;
+  platformsAndTools?: string;
+};
+
 type Project = {
   id: string;
   number: string;
   name: string;
-  category: string;
-  summary: string;
   url: string;
   image: StaticImageData;
-  overview: string;
-  context: string;
-  role: string;
-  work: string;
-  platforms: string;
+  details?: ProjectDetailsData;
 };
 
 const projects: Project[] = [
@@ -43,76 +39,64 @@ const projects: Project[] = [
     id: "amiesha",
     number: "01",
     name: "Amiesha's Store",
-    category: "Multi-category online retail",
-    summary: "A broad online store featuring products across home, fitness, accessories and everyday essentials.",
     url: "https://amieshasstore.com/",
     image: amieshaMockup,
-    overview: "Project overview to be added.",
-    context: "A multi-category online retail storefront.",
-    role: "Role and contribution details to be added.",
-    work: "Work completed details to be added.",
-    platforms: "Platform and tool details have not been verified.",
+    details: {},
   },
   {
     id: "jesus-spirit",
     number: "02",
     name: "Jesus Spirit",
-    category: "Faith-inspired gifts and lifestyle",
-    summary: "An online store centred on faith-inspired gifts, apparel, accessories and homeware.",
     url: "https://jesuspirit.com/",
     image: jesusSpiritMockup,
-    overview: "Project overview to be added.",
-    context: "A faith-inspired gifts and lifestyle storefront.",
-    role: "Role and contribution details to be added.",
-    work: "Work completed details to be added.",
-    platforms: "Platform and tool details have not been verified.",
+    details: {},
   },
   {
     id: "mina-shop",
     number: "03",
     name: "Mina Shop",
-    category: "Online retail",
-    summary: "An online retail storefront. More specific project context will be added after confirmation.",
     url: "https://minashop.ca/",
     image: minaShopMockup,
-    overview: "Project overview to be added.",
-    context: "Online retail. More specific business context is to be confirmed.",
-    role: "Role and contribution details to be added.",
-    work: "Work completed details to be added.",
-    platforms: "Platform and tool details have not been verified.",
+    details: {},
   },
   {
     id: "zesty-paws",
     number: "04",
     name: "Zesty Paws",
-    category: "Pet wellness and supplements",
-    summary: "A pet wellness storefront featuring products for dogs and cats.",
     url: "https://zestypaws.com/",
     image: zestyPawsMockup,
-    overview: "Project overview to be added.",
-    context: "A pet wellness brand with products for dogs and cats.",
-    role: "Role and contribution details to be added.",
-    work: "Work completed details to be added.",
-    platforms: "Platform and tool details have not been verified.",
+    details: {},
   },
 ];
 
+const MOBILE_CAROUSEL_QUERY = "(max-width: 760px)";
 const subscribeToNothing = () => () => {};
-const getClientSnapshot = () => true;
-const getServerSnapshot = () => false;
-const totalPages = projects.length - 2;
+const getClientPortalSnapshot = () => true;
+const getServerPortalSnapshot = () => false;
+
+function subscribeToMobileCarousel(callback: () => void) {
+  const media = window.matchMedia(MOBILE_CAROUSEL_QUERY);
+  media.addEventListener("change", callback);
+  return () => media.removeEventListener("change", callback);
+}
+
+function getMobileCarouselSnapshot() {
+  return window.matchMedia(MOBILE_CAROUSEL_QUERY).matches;
+}
+
+function getServerMobileCarouselSnapshot() {
+  return false;
+}
 
 function ProjectImage({
   project,
-  className = "",
-  sizes = "(max-width: 760px) 33vw, 32vw",
+  sizes = "(max-width: 760px) 92vw, (max-width: 1100px) 48vw, 38vw",
 }: {
   project: Project;
-  className?: string;
   sizes?: string;
 }) {
   return (
-    <div className={"project-image-stage " + className}>
+    <div className="project-image-stage">
       <Image
         className="project-mockup"
         src={project.image}
@@ -127,32 +111,27 @@ function ProjectImage({
 }
 
 function ProjectDetails({ project }: { project: Project }) {
+  const detailFields: { label: string; value?: string }[] = [
+    { label: "Project overview", value: project.details?.overview },
+    { label: "Website / business context", value: project.details?.websiteContext },
+    { label: "My role and contribution", value: project.details?.roleAndContribution },
+    { label: "Work completed", value: project.details?.workCompleted },
+    { label: "Platforms and tools", value: project.details?.platformsAndTools },
+  ];
+  const availableFields = detailFields.filter((field) => field.value?.trim());
+
   return (
     <div className="project-detail-content">
-      <p className="project-detail-summary">{project.summary}</p>
-
-      <div className="project-detail-fields">
-        <section className="project-detail-field project-detail-field-wide">
-          <h4>Project overview</h4>
-          <p>{project.overview}</p>
-        </section>
-        <section className="project-detail-field">
-          <h4>Website / business context</h4>
-          <p>{project.context}</p>
-        </section>
-        <section className="project-detail-field">
-          <h4>My role and contribution</h4>
-          <p>{project.role}</p>
-        </section>
-        <section className="project-detail-field">
-          <h4>Work completed</h4>
-          <p>{project.work}</p>
-        </section>
-        <section className="project-detail-field">
-          <h4>Platforms and tools</h4>
-          <p>{project.platforms}</p>
-        </section>
-      </div>
+      {availableFields.length > 0 && (
+        <div className="project-detail-fields">
+          {availableFields.map((field) => (
+            <section className="project-detail-field" key={field.label}>
+              <h4>{field.label}</h4>
+              <p>{field.value}</p>
+            </section>
+          ))}
+        </div>
+      )}
 
       <a
         className="project-live-link project-detail-live-link"
@@ -179,17 +158,26 @@ export function Projects() {
 
   const canUsePortal = useSyncExternalStore(
     subscribeToNothing,
-    getClientSnapshot,
-    getServerSnapshot,
+    getClientPortalSnapshot,
+    getServerPortalSnapshot,
+  );
+  const isMobileCarousel = useSyncExternalStore(
+    subscribeToMobileCarousel,
+    getMobileCarouselSnapshot,
+    getServerMobileCarouselSnapshot,
   );
   const reducedMotion = useReducedMotion();
+
+  const visibleCount = isMobileCarousel ? 1 : 3;
+  const totalPages = projects.length - visibleCount + 1;
+  const safeActivePage = Math.min(activePage, totalPages - 1);
 
   function goToPage(page: number) {
     const safePage = Math.max(0, Math.min(totalPages - 1, page));
     const carousel = carouselRef.current;
     if (!carousel) return;
 
-    const cardStep = carousel.clientWidth / 3;
+    const cardStep = carousel.clientWidth / visibleCount;
     carousel.scrollTo({
       left: safePage * cardStep,
       behavior: reducedMotion ? "auto" : "smooth",
@@ -200,7 +188,7 @@ export function Projects() {
     const carousel = carouselRef.current;
     if (!carousel) return;
 
-    const cardStep = carousel.clientWidth / 3;
+    const cardStep = carousel.clientWidth / visibleCount;
     if (!cardStep) return;
 
     const page = Math.max(
@@ -209,6 +197,17 @@ export function Projects() {
     );
     setActivePage((current) => current === page ? current : page);
   }
+
+  useEffect(() => {
+    const carousel = carouselRef.current;
+    if (!carousel) return;
+
+    const page = Math.min(activePage, totalPages - 1);
+    carousel.scrollTo({
+      left: page * (carousel.clientWidth / visibleCount),
+      behavior: "auto",
+    });
+  }, [isMobileCarousel]);
 
   function openProject(project: Project, event: MouseEvent<HTMLButtonElement>) {
     lastTriggerRef.current = event.currentTarget;
@@ -307,17 +306,24 @@ export function Projects() {
         >
           <div className="projects-carousel-track">
             {projects.map((project, index) => {
-              const isCentre = index === activePage + 1;
+              const isEmphasised = isMobileCarousel
+                ? index === safeActivePage
+                : index === safeActivePage + 1;
+
               return (
                 <motion.article
-                  className={"project-carousel-item" + (isCentre ? " is-centre" : "")}
+                  className={"project-carousel-item" + (isEmphasised ? " is-centre" : "")}
                   key={project.id}
-                  animate={{ scale: isCentre ? 1.035 : 0.97, y: isCentre ? -5 : 0, opacity: isCentre ? 1 : 0.88 }}
+                  animate={{
+                    scale: isMobileCarousel ? 1 : isEmphasised ? 1.035 : 0.97,
+                    y: !isMobileCarousel && isEmphasised ? -5 : 0,
+                    opacity: isEmphasised ? 1 : 0.88,
+                  }}
                   transition={{
                     duration: reducedMotion ? 0 : 0.34,
                     ease: [0.22, 1, 0.36, 1],
                   }}
-                  aria-current={isCentre ? "true" : undefined}
+                  aria-current={isEmphasised ? "true" : undefined}
                 >
                   <button
                     className="project-card-trigger"
@@ -328,18 +334,23 @@ export function Projects() {
                   >
                     <ProjectImage project={project} />
                     <span className="project-card-copy">
-                      <span className="project-card-meta">
-                        <span>{project.number} / E-COMMERCE</span>
-                        <span>{project.category}</span>
-                      </span>
+                      <span className="project-card-meta">{project.number} / E-COMMERCE</span>
                       <span className="project-card-name">{project.name}</span>
-                      <span className="project-card-summary">{project.summary}</span>
                       <span className="project-card-open">
-                        Explore project
+                        Explore project details
                         <ArrowUpRight size={14} strokeWidth={1.8} />
                       </span>
                     </span>
                   </button>
+                  <a
+                    className="project-card-live-link"
+                    href={project.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    Visit live website
+                    <ExternalLink size={12} strokeWidth={1.8} />
+                  </a>
                 </motion.article>
               );
             })}
@@ -350,15 +361,15 @@ export function Projects() {
           <button
             className="project-carousel-arrow project-carousel-previous"
             type="button"
-            onClick={() => goToPage(activePage - 1)}
-            disabled={activePage === 0}
+            onClick={() => goToPage(safeActivePage - 1)}
+            disabled={safeActivePage === 0}
             aria-label="Previous projects"
           >
             <ArrowLeft size={17} strokeWidth={1.7} />
           </button>
 
           <div className="project-carousel-counter" aria-live="polite">
-            <span>0{activePage + 1}</span>
+            <span>0{safeActivePage + 1}</span>
             <span className="project-counter-divider" />
             <span>0{totalPages}</span>
           </div>
@@ -366,8 +377,8 @@ export function Projects() {
           <button
             className="project-carousel-arrow project-carousel-next"
             type="button"
-            onClick={() => goToPage(activePage + 1)}
-            disabled={activePage === totalPages - 1}
+            onClick={() => goToPage(safeActivePage + 1)}
+            disabled={safeActivePage === totalPages - 1}
             aria-label="Next projects"
           >
             <ArrowRight size={17} strokeWidth={1.7} />
@@ -377,12 +388,12 @@ export function Projects() {
         <div className="project-carousel-pagination" aria-label="Carousel pagination">
           {Array.from({ length: totalPages }, (_, page) => (
             <button
-              className={"project-pagination-dot" + (activePage === page ? " is-active" : "")}
+              className={"project-pagination-dot" + (safeActivePage === page ? " is-active" : "")}
               key={page}
               type="button"
               onClick={() => goToPage(page)}
-              aria-label={"Go to project page " + (page + 1)}
-              aria-current={activePage === page ? "page" : undefined}
+              aria-label={"Go to project " + (page + 1)}
+              aria-current={safeActivePage === page ? "page" : undefined}
             />
           ))}
         </div>
@@ -393,57 +404,57 @@ export function Projects() {
           {selectedProject && (
             <motion.div
               className="project-dialog-backdrop"
-            key="project-dialog-backdrop"
-            initial={reducedMotion ? false : { opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={reducedMotion ? undefined : { opacity: 0 }}
-            transition={{ duration: reducedMotion ? 0 : 0.22 }}
-            onClick={closeProject}
-          >
-            <motion.section
-              ref={dialogRef}
-              className="project-dialog"
-              role="dialog"
-              aria-modal="true"
-              aria-labelledby="project-dialog-title"
-              tabIndex={-1}
-              initial={reducedMotion ? false : { x: "100%" }}
-              animate={{ x: 0 }}
-              exit={reducedMotion ? undefined : { x: "100%" }}
-              transition={{ duration: reducedMotion ? 0 : 0.36, ease: [0.22, 1, 0.36, 1] }}
-              onClick={(event) => event.stopPropagation()}
+              key="project-dialog-backdrop"
+              initial={reducedMotion ? false : { opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={reducedMotion ? undefined : { opacity: 0 }}
+              transition={{ duration: reducedMotion ? 0 : 0.22 }}
+              onClick={closeProject}
             >
-              <div className="project-dialog-inner">
-                <div className="project-dialog-topline">
-                  <span>PROJECT DETAILS / {selectedProject.number}</span>
-                  <button
-                    className="project-dialog-close"
-                    type="button"
-                    onClick={closeProject}
-                    aria-label={"Close " + selectedProject.name + " project details"}
-                  >
-                    <X size={19} />
-                  </button>
-                </div>
-
-                <div className="project-dialog-layout">
-                  <div className="project-dialog-art">
-                    <ProjectImage
-                      project={selectedProject}
-                      sizes="(max-width: 760px) 100vw, 52vw"
-                    />
+              <motion.section
+                ref={dialogRef}
+                className="project-dialog"
+                role="dialog"
+                aria-modal="true"
+                aria-labelledby="project-dialog-title"
+                tabIndex={-1}
+                initial={reducedMotion ? false : { x: "100%" }}
+                animate={{ x: 0 }}
+                exit={reducedMotion ? undefined : { x: "100%" }}
+                transition={{ duration: reducedMotion ? 0 : 0.36, ease: [0.22, 1, 0.36, 1] }}
+                onClick={(event) => event.stopPropagation()}
+              >
+                <div className="project-dialog-inner">
+                  <div className="project-dialog-topline">
+                    <span>PROJECT DETAILS / {selectedProject.number}</span>
+                    <button
+                      className="project-dialog-close"
+                      type="button"
+                      onClick={closeProject}
+                      aria-label={"Close " + selectedProject.name + " project details"}
+                    >
+                      <X size={19} />
+                    </button>
                   </div>
 
-                  <div className="project-dialog-copy">
-                    <p className="project-detail-category">{selectedProject.category}</p>
-                    <h3 id="project-dialog-title">
-                      {selectedProject.name}
-                    </h3>
-                    <ProjectDetails project={selectedProject} />
+                  <div className="project-dialog-layout">
+                    <div className="project-dialog-art">
+                      <ProjectImage
+                        project={selectedProject}
+                        sizes="(max-width: 760px) 100vw, 58vw"
+                      />
+                    </div>
+
+                    <div className="project-dialog-copy">
+                      <p className="project-detail-category">
+                        E-COMMERCE DEVELOPMENT / {selectedProject.number}
+                      </p>
+                      <h3 id="project-dialog-title">{selectedProject.name}</h3>
+                      <ProjectDetails project={selectedProject} />
+                    </div>
                   </div>
                 </div>
-              </div>
-            </motion.section>
+              </motion.section>
             </motion.div>
           )}
         </AnimatePresence>,

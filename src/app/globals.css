@@ -999,10 +999,7 @@ button { font: inherit; }
   font-size: 13px;
   line-height: 1.8;
 }
-.projects-carousel-shell {
-  position: relative;
-  width: 100%;
-}
+.projects-carousel-shell { position: relative; width: 100%; }
 .projects-carousel-viewport {
   width: 100%;
   overflow-x: auto;
@@ -1034,7 +1031,6 @@ button { font: inherit; }
   display: block;
   width: 100%;
   min-width: 0;
-  height: 100%;
   padding: 0;
   border: 0;
   background: transparent;
@@ -1060,27 +1056,14 @@ button { font: inherit; }
   padding: 6px;
   transition: transform .5s cubic-bezier(.22, 1, .36, 1);
 }
-.project-card-copy {
-  display: block;
-  padding: 17px 2px 0;
-}
+.project-card-copy { display: block; padding: 17px 2px 0; }
 .project-card-meta {
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
+  display: block;
   color: #8b877e;
   font-size: 7px;
   font-weight: 800;
   letter-spacing: .11em;
   line-height: 1.45;
-}
-.project-card-meta > span:last-child {
-  overflow: hidden;
-  font-size: 7px;
-  font-weight: 600;
-  letter-spacing: .035em;
-  text-overflow: ellipsis;
-  white-space: nowrap;
 }
 .project-card-name {
   display: block;
@@ -1092,23 +1075,12 @@ button { font: inherit; }
   letter-spacing: -.06em;
   line-height: 1.05;
 }
-.project-card-summary {
-  display: -webkit-box;
-  max-width: 430px;
-  overflow: hidden;
-  margin-top: 9px;
-  color: #77746c;
-  font-size: 10px;
-  line-height: 1.65;
-  -webkit-box-orient: vertical;
-  -webkit-line-clamp: 2;
-}
 .project-card-open {
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 10px;
-  margin-top: 16px;
+  margin-top: 15px;
   padding: 10px 0 7px;
   border-top: 1px solid rgba(23, 23, 20, .17);
   color: #514e47;
@@ -1117,9 +1089,17 @@ button { font: inherit; }
   letter-spacing: .035em;
 }
 .project-card-open svg { transition: transform .22s ease; }
-.project-carousel-item.is-centre .project-image-stage {
-  box-shadow: 0 15px 34px rgba(23, 23, 20, .105);
+.project-card-live-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  margin: 9px 2px 0;
+  color: #77746c;
+  font-size: 9px;
+  font-weight: 650;
+  line-height: 1.5;
 }
+.project-card-live-link svg { transition: transform .22s ease; }
 .projects-carousel-controls {
   display: flex;
   width: min(100%, 240px);
@@ -1141,21 +1121,14 @@ button { font: inherit; }
   cursor: pointer;
   transition: background .22s ease, color .22s ease, border-color .22s ease, transform .22s ease;
 }
-.project-carousel-arrow:disabled {
-  opacity: .3;
-  cursor: not-allowed;
-}
+.project-carousel-arrow:disabled { opacity: .3; cursor: not-allowed; }
 .project-carousel-arrow:not(:disabled):hover {
   transform: translateY(-2px);
   border-color: var(--ink);
   background: var(--ink);
   color: var(--paper);
 }
-.project-counter-divider {
-  width: 30px;
-  height: 1px;
-  background: rgba(23, 23, 20, .3);
-}
+.project-counter-divider { width: 30px; height: 1px; background: rgba(23, 23, 20, .3); }
 .project-carousel-counter {
   display: flex;
   align-items: center;
@@ -1166,6 +1139,7 @@ button { font: inherit; }
   letter-spacing: .13em;
 }
 .project-carousel-pagination { display: none; }
+
 .project-dialog-backdrop {
   position: fixed;
   z-index: 1200;
@@ -1218,22 +1192,21 @@ button { font: inherit; }
   cursor: pointer;
   transition: background .2s ease, color .2s ease;
 }
-.project-dialog-close:hover {
-  background: var(--ink);
-  color: #fff;
-}
+.project-dialog-close:hover { background: var(--ink); color: #fff; }
 .project-dialog-layout {
   display: grid;
-  grid-template-columns: minmax(0, 1.05fr) minmax(0, .95fr);
+  grid-template-columns: minmax(0, 1.12fr) minmax(0, .88fr);
   align-items: start;
   gap: clamp(28px, 4vw, 58px);
   padding-top: 30px;
 }
 .project-dialog-art { min-width: 0; }
 .project-dialog-art .project-image-stage {
-  aspect-ratio: 1.18 / 1;
+  aspect-ratio: 16 / 9;
   box-shadow: none;
+  background: #e9e5dc;
 }
+.project-dialog-art .project-mockup { padding: 0; }
 .project-dialog-copy { min-width: 0; padding: 8px 0 0; }
 .project-detail-category {
   margin: 0 0 11px;
@@ -1251,27 +1224,18 @@ button { font: inherit; }
   letter-spacing: -.08em;
   line-height: .94;
 }
-.project-dialog-copy > h3:focus { outline: none; }
 .project-detail-content { padding-top: 2px; }
-.project-detail-summary {
-  max-width: 540px;
-  margin: 14px 0 0;
-  color: #77746c;
-  font-size: 12px;
-  line-height: 1.75;
-}
 .project-detail-fields {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 22px 20px;
-  margin-top: 28px;
+  margin-top: 26px;
 }
 .project-detail-field {
   min-width: 0;
   padding-top: 12px;
   border-top: 1px solid rgba(23, 23, 20, .17);
 }
-.project-detail-field-wide { grid-column: 1 / -1; }
 .project-detail-field h4 {
   margin: 0 0 8px;
   color: #8b877e;
@@ -1288,7 +1252,7 @@ button { font: inherit; }
 }
 .project-detail-live-link {
   display: inline-flex;
-  margin-top: 24px;
+  margin-top: 23px;
   min-height: 40px;
   align-items: center;
   gap: 10px;
@@ -1296,14 +1260,16 @@ button { font: inherit; }
   border: 1px solid var(--ink);
   background: var(--ink);
   color: #fff;
+  transition: transform .2s ease, background .2s ease, color .2s ease;
 }
 .project-detail-live-link:hover {
   transform: translateY(-1px);
   background: transparent;
   color: var(--ink);
 }
-.project-details-button:focus-visible,
-.project-live-link:focus-visible,
+.project-card-live-link:focus-visible,
+.project-card-trigger:focus-visible,
+.project-detail-live-link:focus-visible,
 .project-dialog-close:focus-visible,
 .project-carousel-arrow:focus-visible,
 .project-pagination-dot:focus-visible {
@@ -1312,20 +1278,17 @@ button { font: inherit; }
 }
 @media (hover: hover) and (pointer: fine) {
   .project-card-trigger:hover .project-mockup { transform: scale(1.018); }
-  .project-card-trigger:hover .project-card-open svg { transform: translate(2px, -2px); }
+  .project-card-trigger:hover .project-card-open svg,
+  .project-card-live-link:hover svg { transform: translate(2px, -2px); }
 }
 @media (max-width: 1120px) {
   .projects-section { width: min(calc(100% - 6vw), var(--max-width)); }
   .projects-intro { gap: 32px; }
   .project-carousel-item { padding-inline: 8px; }
-  .project-card-summary { font-size: 9px; }
   .project-dialog-layout { gap: 28px; }
 }
 @media (max-width: 760px) {
-  .projects-section {
-    width: calc(100% - 32px);
-    padding: 30px 0 78px;
-  }
+  .projects-section { width: calc(100% - 32px); padding: 30px 0 78px; }
   .projects-intro {
     grid-template-columns: 1fr;
     align-items: start;
@@ -1333,10 +1296,7 @@ button { font: inherit; }
     margin-bottom: 27px;
   }
   .projects-eyebrow { margin-bottom: 13px; }
-  .projects-title {
-    font-size: clamp(2.45rem, 10.5vw, 4rem);
-    line-height: .96;
-  }
+  .projects-title { font-size: clamp(2.45rem, 10.5vw, 4rem); line-height: .96; }
   .projects-subtitle { margin-top: 10px; font-size: 1.1rem; }
   .projects-summary { max-width: 540px; margin: 0; font-size: 12px; line-height: 1.75; }
   .projects-carousel-viewport {
@@ -1344,32 +1304,24 @@ button { font: inherit; }
     margin: -12px 0 -18px;
     scroll-snap-type: x mandatory;
   }
-  .projects-carousel-track { width: 133.333333%; }
-  .project-carousel-item { padding: 0 5px; }
-  .project-image-stage { aspect-ratio: 1.02 / 1; }
-  .project-mockup { padding: 3px; }
-  .project-card-copy { padding: 12px 1px 0; }
-  .project-card-meta { gap: 5px; font-size: 6px; letter-spacing: .07em; }
-  .project-card-meta > span:last-child { font-size: 6px; }
+  .projects-carousel-track { width: 400%; }
+  .project-carousel-item { padding: 0 9px; }
+  .project-carousel-item.is-centre { opacity: 1; }
+  .project-image-stage {
+    aspect-ratio: 16 / 9;
+    background: #e9e5dc;
+  }
+  .project-mockup { padding: 0; }
+  .project-card-copy { padding: 13px 1px 0; }
+  .project-card-meta { font-size: 6px; }
   .project-card-name {
     margin-top: 8px;
-    font-size: clamp(.92rem, 4vw, 1.2rem);
+    font-size: clamp(1.2rem, 5vw, 1.55rem);
     letter-spacing: -.055em;
     line-height: 1.05;
   }
-  .project-card-summary {
-    display: -webkit-box;
-    margin-top: 7px;
-    font-size: 8px;
-    line-height: 1.45;
-    -webkit-line-clamp: 3;
-  }
-  .project-card-open {
-    margin-top: 10px;
-    padding-top: 8px;
-    font-size: 7px;
-  }
-  .project-card-open svg { width: 11px; height: 11px; }
+  .project-card-open { margin-top: 11px; padding-top: 9px; font-size: 8px; }
+  .project-card-live-link { margin: 7px 1px 0; font-size: 8px; }
   .projects-carousel-controls { display: none; }
   .project-carousel-pagination {
     display: flex;
@@ -1407,26 +1359,24 @@ button { font: inherit; }
     padding: 12px 16px calc(30px + env(safe-area-inset-bottom));
   }
   .project-dialog-topline { margin-bottom: 16px; }
-  .project-dialog-layout { grid-template-columns: 1fr; gap: 21px; padding-top: 0; }
-  .project-dialog-art .project-image-stage { aspect-ratio: 1.28 / 1; }
+  .project-dialog-layout { grid-template-columns: 1fr; gap: 20px; padding-top: 0; }
+  .project-dialog-art .project-image-stage { aspect-ratio: 16 / 9; }
+  .project-dialog-art .project-mockup { padding: 0; }
   .project-dialog-copy { padding-top: 0; }
   .project-dialog-copy > h3 { font-size: clamp(2.3rem, 10vw, 3.3rem); }
-  .project-detail-summary { font-size: 12px; }
   .project-detail-fields { grid-template-columns: 1fr; gap: 17px; margin-top: 22px; }
-  .project-detail-field-wide { grid-column: auto; }
   .project-detail-live-link { width: 100%; justify-content: center; }
 }
 @media (max-width: 360px) {
   .projects-section { width: calc(100% - 26px); }
-  .project-carousel-item { padding-inline: 4px; }
-  .project-card-meta { font-size: 5px; }
-  .project-card-meta > span:last-child { font-size: 5px; }
-  .project-card-open { font-size: 6px; }
+  .project-carousel-item { padding-inline: 7px; }
+  .project-card-meta { font-size: 6px; }
 }
 @media (prefers-reduced-motion: reduce) {
   .projects-carousel-viewport { scroll-behavior: auto; }
   .project-mockup,
   .project-card-open svg,
+  .project-card-live-link svg,
   .project-detail-live-link,
   .project-carousel-arrow,
   .project-pagination-dot { transition: none; }
