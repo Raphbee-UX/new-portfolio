@@ -155,6 +155,7 @@ export function Projects() {
 
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
   const [activePage, setActivePage] = useState(0);
+  const activePageRef = useRef(0);
 
   const canUsePortal = useSyncExternalStore(
     subscribeToNothing,
@@ -195,19 +196,31 @@ export function Projects() {
       0,
       Math.min(totalPages - 1, Math.round(carousel.scrollLeft / cardStep)),
     );
+    activePageRef.current = page;
     setActivePage((current) => current === page ? current : page);
   }
 
   useEffect(() => {
-    const carousel = carouselRef.current;
-    if (!carousel) return;
+    const media = window.matchMedia(MOBILE_CAROUSEL_QUERY);
 
-    const page = Math.min(activePage, totalPages - 1);
-    carousel.scrollTo({
-      left: page * (carousel.clientWidth / visibleCount),
-      behavior: "auto",
-    });
-  }, [isMobileCarousel]);
+    const handleBreakpointChange = () => {
+      const carousel = carouselRef.current;
+      if (!carousel) return;
+
+      const nextVisibleCount = media.matches ? 1 : 3;
+      const maxPage = projects.length - nextVisibleCount;
+      const page = Math.min(activePageRef.current, maxPage);
+      activePageRef.current = page;
+      setActivePage(page);
+      carousel.scrollTo({
+        left: page * (carousel.clientWidth / nextVisibleCount),
+        behavior: "auto",
+      });
+    };
+
+    media.addEventListener("change", handleBreakpointChange);
+    return () => media.removeEventListener("change", handleBreakpointChange);
+  }, []);
 
   function openProject(project: Project, event: MouseEvent<HTMLButtonElement>) {
     lastTriggerRef.current = event.currentTarget;
