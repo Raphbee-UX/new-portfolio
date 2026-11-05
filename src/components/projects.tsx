@@ -338,32 +338,70 @@ export function Projects() {
                   }}
                   aria-current={isEmphasised ? "true" : undefined}
                 >
-                  <button
-                    className="project-card-trigger"
-                    type="button"
-                    onClick={(event) => openProject(project, event)}
-                    aria-label={"Open " + project.name + " project details"}
-                    aria-haspopup="dialog"
-                  >
-                    <ProjectImage project={project} />
-                    <span className="project-card-copy">
-                      <span className="project-card-meta">{project.number} / E-COMMERCE</span>
-                      <span className="project-card-name">{project.name}</span>
-                      <span className="project-card-open">
-                        Explore project details
-                        <ArrowUpRight size={14} strokeWidth={1.8} />
-                      </span>
-                    </span>
-                  </button>
-                  <a
-                    className="project-card-live-link"
-                    href={project.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    Visit live website
-                    <ExternalLink size={12} strokeWidth={1.8} />
-                  </a>
+                  <div className="project-card-motion">
+                    <div className="project-card-surface">
+                      <div className="project-card-media-wrap">
+                        <button
+                          className="project-card-image-trigger"
+                          type="button"
+                          onClick={(event) => openProject(project, event)}
+                          aria-label={"Open " + project.name + " project details"}
+                          aria-haspopup="dialog"
+                        >
+                          <ProjectImage project={project} />
+                        </button>
+
+                        {isMobileCarousel && (
+                          <div className="project-mobile-navigation" aria-label="Project navigation">
+                            <button
+                              className="project-mobile-nav-button project-mobile-nav-previous"
+                              type="button"
+                              onClick={() => goToPage(index - 1)}
+                              disabled={index === 0}
+                              aria-label={index === 0 ? "First project" : "Previous project"}
+                            >
+                              <ArrowLeft size={17} strokeWidth={1.8} />
+                            </button>
+                            <button
+                              className="project-mobile-nav-button project-mobile-nav-next"
+                              type="button"
+                              onClick={() => goToPage(index + 1)}
+                              disabled={index === projects.length - 1}
+                              aria-label={index === projects.length - 1 ? "Last project" : "Next project"}
+                            >
+                              <ArrowRight size={18} strokeWidth={1.9} />
+                            </button>
+                          </div>
+                        )}
+                      </div>
+
+                      <div className="project-card-content">
+                        <span className="project-card-meta">{project.number} / E-COMMERCE</span>
+                        <button
+                          className="project-card-info-trigger"
+                          type="button"
+                          onClick={(event) => openProject(project, event)}
+                          aria-label={"Open " + project.name + " project details"}
+                          aria-haspopup="dialog"
+                        >
+                          <span className="project-card-name">{project.name}</span>
+                          <span className="project-card-open">
+                            Explore project details
+                            <ArrowUpRight size={14} strokeWidth={1.8} />
+                          </span>
+                        </button>
+                        <a
+                          className="project-card-live-link"
+                          href={project.url}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                        >
+                          Visit live website
+                          <ExternalLink size={12} strokeWidth={1.8} />
+                        </a>
+                      </div>
+                    </div>
+                  </div>
                 </motion.article>
               );
             })}
