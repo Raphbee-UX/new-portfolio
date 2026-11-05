@@ -1045,7 +1045,7 @@ button { font: inherit; }
 .project-image-stage {
   position: relative;
   width: 100%;
-  aspect-ratio: 1.28 / 1;
+  aspect-ratio: 16 / 9;
   overflow: hidden;
   border: 1px solid rgba(23, 23, 20, .13);
   background: #e9e5dc;
@@ -1053,8 +1053,7 @@ button { font: inherit; }
 }
 .project-mockup {
   object-fit: contain;
-  padding: 6px;
-  transition: transform .5s cubic-bezier(.22, 1, .36, 1);
+  padding: 0;
 }
 .project-card-copy { display: block; padding: 17px 2px 0; }
 .project-card-meta {
@@ -1202,11 +1201,8 @@ button { font: inherit; }
 }
 .project-dialog-art { min-width: 0; }
 .project-dialog-art .project-image-stage {
-  aspect-ratio: 16 / 9;
   box-shadow: none;
-  background: #e9e5dc;
 }
-.project-dialog-art .project-mockup { padding: 0; }
 .project-dialog-copy { min-width: 0; padding: 8px 0 0; }
 .project-detail-category {
   margin: 0 0 11px;
@@ -1277,7 +1273,6 @@ button { font: inherit; }
   outline-offset: 4px;
 }
 @media (hover: hover) and (pointer: fine) {
-  .project-card-trigger:hover .project-mockup { transform: scale(1.018); }
   .project-card-trigger:hover .project-card-open svg,
   .project-card-live-link:hover svg { transform: translate(2px, -2px); }
 }
